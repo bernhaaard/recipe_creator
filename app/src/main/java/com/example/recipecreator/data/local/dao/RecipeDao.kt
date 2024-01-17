@@ -18,7 +18,7 @@ interface RecipeDao {
     suspend fun getRecipeById(recipeId: Long): Recipe?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRecipe(recipe: Recipe): Long
+    suspend fun insertRecipe(recipe: Recipe)
 
     @Update
     suspend fun updateRecipe(recipe: Recipe)

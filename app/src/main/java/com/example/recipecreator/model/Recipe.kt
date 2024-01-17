@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Recipe(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val title: String,
-    val ingredients: String,
+    val ingredients: List<String>,
     val instructions: String,
     val favorite: Boolean = false,
 )
