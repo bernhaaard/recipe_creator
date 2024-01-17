@@ -1,4 +1,4 @@
-package com.example.recipe_creator
+package com.example.recipecreator
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.recipe_creator.ui.theme.Recipe_creatorTheme
+import com.example.recipecreator.ui.theme.Recipe_creatorTheme
 
 @Suppress("ktlint:standard:function-naming")
 class MainActivity : ComponentActivity() {
@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
 fun Greeting(
     name: String,
@@ -38,6 +39,7 @@ fun Greeting(
     )
 }
 
+@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
