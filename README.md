@@ -23,7 +23,7 @@ Culinary Companion is a mobile application designed to enhance the cooking and m
 
 ### Installation
 1. Clone the repository:
-   git clone https://github.com/your-github-username/culinary-companion-app.git
+   git clone https://github.com/bernhaaard/recipe_creator
 2. Open the project in Android Studio.
 3. Configure Firebase:
    - Follow the instructions [here](https://firebase.google.com/docs/android/setup) to connect your app with Firebase.
@@ -40,7 +40,7 @@ Contributions to Culinary Companion are welcome! Please read our contributing gu
 This project is licensed under the [MIT License](LICENSE.md) - see the LICENSE file for details.
 
 ## Contact
-For any queries, please contact us at [your-email@example.com].
+For any queries, please contact us at [berni.nops.kofler@gmail.com][cc221052@fhstp.ac.at].
 
 ---
 *This README is a work in progress and will be updated as the project evolves.*
