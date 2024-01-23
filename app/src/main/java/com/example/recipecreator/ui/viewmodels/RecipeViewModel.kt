@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(private val recipeRepository: RecipeRepository) : ViewModel() {
-
     // StateFlow to hold the current state of recipe operations
     private val _recipeViewState = MutableStateFlow(RecipeViewState())
     val recipeViewState = _recipeViewState.asStateFlow()
@@ -20,10 +19,11 @@ class RecipeViewModel(private val recipeRepository: RecipeRepository) : ViewMode
         viewModelScope.launch {
             _recipeViewState.value = _recipeViewState.value.copy(isLoading = true)
             recipeRepository.getAllRecipes().collect { recipes ->
-                _recipeViewState.value = RecipeViewState(
-                    isLoading = false,
-                    recipes = recipes
-                )
+                _recipeViewState.value =
+                    RecipeViewState(
+                        isLoading = false,
+                        recipes = recipes,
+                    )
             }
         }
     }
@@ -53,6 +53,5 @@ class RecipeViewModel(private val recipeRepository: RecipeRepository) : ViewMode
             // Update state as needed after deletion
         }
     }
-
     // Additional logic and methods as required
 }
