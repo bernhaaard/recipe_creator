@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.DividerDefaults.color
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +30,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.example.recipe_creator.R
+import com.example.recipecreator.ui.theme.Purple80
 import com.example.recipecreator.ui.theme.Recipe_creatorTheme
 
 @Suppress("ktlint:standard:function-naming")
@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background,
+                    color = Purple80,
                 ) {
                     Test()
                 }
@@ -235,7 +235,7 @@ fun UserChatBoxWithIcon() {
                         Modifier
                             .width(205.dp)
                             .padding(end = 0.dp),
-                    text = ("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii?"),
+                    text = ("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"),
                 )
             }
         }

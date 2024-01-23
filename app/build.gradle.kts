@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.recipe_creator"
+    namespace = "com.example.recipecreator"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.recipe_creator"
+        applicationId = "com.example.recipecreator"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -59,6 +59,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.runtime:runtime:1.5.4")
     implementation("androidx.room:room-common:2.6.1")
+    implementation("com.android.support:support-annotations:28.0.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -73,8 +74,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.0") // OkHttp
 
     // Firebase & Room Database
-    implementation("com.google.firebase:firebase-auth:22.3.0") // Firebase Auth
-    implementation("com.google.firebase:firebase-firestore:24.10.0") // Cloud Firestore
+    // implementation("com.google.firebase:firebase-auth:22.3.0") // Firebase Auth
+    // implementation("com.google.firebase:firebase-firestore:24.10.0") // Cloud Firestore
     implementation("androidx.room:room-runtime:2.6.1")
     //noinspection KaptUsageInsteadOfKsp
     kapt("androidx.room:room-compiler:2.6.1") // Use kapt for Kotlin
@@ -82,8 +83,8 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
 
     // Material UI Components
     implementation("com.google.android.material:material:1.11.0")

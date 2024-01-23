@@ -13,6 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "recipe_creator"
+rootProject.name = "recipecreator"
 include(":app")
- 
