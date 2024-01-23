@@ -146,7 +146,11 @@ fun AIAssistantChatBox() {
                     .wrapContentHeight()
                     .width(285.dp)
                     .shadow(elevation = 10.dp, spotColor = Color.Black, ambientColor = Color.Black)
-                    .border(width = 1.5.dp, color = Color.Green, shape = RoundedCornerShape((12.5.dp)))
+                    .border(
+                        width = 1.5.dp,
+                        color = Color.Green,
+                        shape = RoundedCornerShape((12.5.dp)),
+                    )
                     .background(color = Color.White, shape = RoundedCornerShape(12.5.dp))
                     .padding(start = 40.dp, top = 10.dp, end = 20.dp, bottom = 10.dp)
                     .zIndex(2f),
