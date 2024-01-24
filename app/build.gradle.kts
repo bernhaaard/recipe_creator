@@ -84,17 +84,11 @@ dependencies {
     implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.16")
 
     // Networking
-    implementation("com.squareup.retrofit2:retrofit:2.9.0") // Retrofit
     implementation("com.squareup.retrofit2:converter-gson:2.9.0") // Gson converter
-    implementation("com.squareup.okhttp3:okhttp:4.9.0") // OkHttp
 
-    // Firebase & Room Database
-    // implementation("com.google.firebase:firebase-auth:22.3.0") // Firebase Auth
-    // implementation("com.google.firebase:firebase-firestore:24.10.0") // Cloud Firestore
+    // Room Database
     implementation("androidx.room:room-runtime:2.6.1")
-    //noinspection KaptUsageInsteadOfKsp
     ksp("androidx.room:room-compiler:2.6.1") // Use kapt for Kotlin
-    // For Kotlin use Room with coroutines
     implementation("androidx.room:room-ktx:2.6.1")
 
     // Coroutines
