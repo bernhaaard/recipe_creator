@@ -31,14 +31,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.recipecreator.ui.theme.Purple80
-import com.example.recipecreator.ui.theme.Recipe_creatorTheme
+import com.example.recipecreator.ui.theme.RecipeWizardTheme
 
 @Suppress("ktlint:standard:function-naming")
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Recipe_creatorTheme {
+            RecipeWizardTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
