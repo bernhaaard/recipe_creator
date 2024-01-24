@@ -1,7 +1,18 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
+}
+
+kotlin {
+    sourceSets {
+        debug {
+            kotlin.srcDir("build/generated/ksp/debug/kotlin")
+        }
+        release {
+            kotlin.srcDir("build/generated/ksp/release/kotlin")
+        }
+    }
 }
 
 android {
@@ -41,7 +52,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -59,7 +70,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3:1.2.0-rc01")
     implementation("androidx.compose.runtime:runtime:1.5.4")
     implementation("androidx.room:room-common:2.6.1")
     implementation("com.android.support:support-annotations:28.0.0")
@@ -70,6 +81,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.16")
 
     // Networking
     implementation("com.squareup.retrofit2:retrofit:2.9.0") // Retrofit
@@ -81,7 +93,7 @@ dependencies {
     // implementation("com.google.firebase:firebase-firestore:24.10.0") // Cloud Firestore
     implementation("androidx.room:room-runtime:2.6.1")
     //noinspection KaptUsageInsteadOfKsp
-    kapt("androidx.room:room-compiler:2.6.1") // Use kapt for Kotlin
+    ksp("androidx.room:room-compiler:2.6.1") // Use kapt for Kotlin
     // For Kotlin use Room with coroutines
     implementation("androidx.room:room-ktx:2.6.1")
 
@@ -91,4 +103,8 @@ dependencies {
 
     // Material UI Components
     implementation("com.google.android.material:material:1.11.0")
+
+    // Navigation
+    implementation("io.github.raamcosta.compose-destinations:core:1.9.62")
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.62")
 }
