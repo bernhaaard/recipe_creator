@@ -1,3 +1,8 @@
 package com.example.recipecreator.ui.screens
 
-class HomeScreen
+import androidx.compose.runtime.Composable
+
+@Composable
+fun HomeScreen() {
+    // Home Screen Composable
+}
