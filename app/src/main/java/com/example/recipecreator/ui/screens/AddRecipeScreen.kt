@@ -266,6 +266,7 @@ fun InstructionsList() {
                 Modifier
                     .wrapContentHeight()
                     .fillMaxWidth()
+                    .padding(bottom = 0.dp)
                     .background(Color.White)
                     .border(
                         width = 1.dp,
@@ -282,6 +283,70 @@ fun InstructionsList() {
     }
 }
 
+@Composable
+fun AddRecipeView() {
+    Column(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(0.dp),
+        Arrangement.Center,
+        Alignment.CenterHorizontally,
+    ) {
+        Column(
+            modifier =
+                Modifier
+                    .padding(16.dp)
+                    .width(320.dp),
+        ) {
+            // Instruction header and Text-fields
+
+            // Box with Instruction steps
+            Column(
+                modifier =
+                    Modifier
+                        .wrapContentHeight()
+                        .width(320.dp)
+                        .padding(bottom = 0.dp)
+                        .background(Color.White)
+                        .border(
+                            width = 1.dp,
+                            color = Color(0xFF74CD66),
+                            shape = RoundedCornerShape(size = 12.5.dp),
+                        ),
+                Arrangement.Center,
+                Alignment.CenterHorizontally,
+            ) {
+                // Add a Composable named InstructionSteps (located below this Composable)
+                InstructionStep()
+                InstructionStep()
+            }
+
+            // Add Another ingredient TextField for Instruction
+            var text6 = "Add another ingredient"
+            TextField(
+                modifier =
+                    Modifier
+                        .padding(top = 10.dp)
+                        .width(320.dp)
+                        .clip(RoundedCornerShape(12.5.dp))
+                        .border(
+                            width = 1.dp,
+                            color = Color(0xFF74CD66),
+                            shape = RoundedCornerShape(size = 12.5.dp),
+                        ),
+                value = text6,
+                textStyle = TextStyle(Color(0xFF74CD66)),
+                onValueChange = { text6 = it },
+            )
+
+            Spacer(modifier = Modifier.padding(20.dp))
+
+            // Button to save the Recipe
+        }
+    }
+}
+
 // Composable for Steps + Textfield
 @Composable
 fun InstructionStep() {
@@ -290,7 +355,7 @@ fun InstructionStep() {
         modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(16.dp, 12.dp),
+                .padding(16.dp),
     ) {
         Text(
             text = "Step 1",
@@ -304,7 +369,8 @@ fun InstructionStep() {
         TextField(
             modifier =
                 Modifier
-                    .fillMaxWidth()
+                    .width(270.dp)
+                    .padding()
                     .clip(RoundedCornerShape(12.5.dp))
                     .border(
                         width = 1.dp,
