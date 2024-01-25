@@ -7,19 +7,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.recipecreator.ui.uicomponents.AppTopBar
-import com.example.recipecreator.ui.uicomponents.NavigationBar
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
 @Composable
-fun RecipeLibraryScreen(navigator: DestinationsNavigator) {
+fun RecipeLibraryScreen() {
     Scaffold(
         topBar = {
             AppTopBar(title = "Library")
-        },
-        bottomBar = {
-            NavigationBar(navigator = navigator)
         },
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {

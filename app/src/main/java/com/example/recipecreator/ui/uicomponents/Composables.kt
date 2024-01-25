@@ -22,11 +22,14 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -34,37 +37,79 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.recipecreator.R
-import com.example.recipecreator.ui.screens.destinations.AddRecipeScreenDestination
-import com.example.recipecreator.ui.screens.destinations.HomeScreenDestination
-import com.example.recipecreator.ui.screens.destinations.RecipeLibraryScreenDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.example.recipecreator.ui.screens.AddRecipeScreen
+import com.example.recipecreator.ui.screens.HomeScreen
+import com.example.recipecreator.ui.screens.RecipeLibraryScreen
+import com.example.recipecreator.ui.viewmodels.RecipeViewModel
+
+sealed class Screen(val route: String) {
+    object Home : Screen("home")
+
+    object RecipeLibrary : Screen("recipeLibrary")
+
+    object AddRecipe : Screen("addRecipe")
+}
 
 @Composable
-fun NavigationBar(navigator: DestinationsNavigator) {
-    NavigationBar {
+fun MainView(recipeViewModel: RecipeViewModel) {
+    val state = recipeViewModel.recipeViewState.collectAsState()
+    val navController = rememberNavController()
+    Scaffold(
+        bottomBar = {
+            BottomNavigationBar(navController)
+        },
+    ) {
+        NavHost(
+            navController = navController,
+            modifier = Modifier.padding(it),
+            startDestination = Screen.RecipeLibrary.route,
+        ) {
+            composable(Screen.Home.route) {
+                recipeViewModel.selectScreen(Screen.Home)
+                HomeScreen()
+            }
+            composable(Screen.RecipeLibrary.route) {
+                recipeViewModel.selectScreen(Screen.RecipeLibrary)
+                RecipeLibraryScreen()
+            }
+            composable(Screen.AddRecipe.route) {
+                recipeViewModel.selectScreen(Screen.AddRecipe)
+                AddRecipeScreen()
+            }
+        }
+    }
+}
+
+@Composable
+fun BottomNavigationBar(navController: NavController) {
+    NavigationBar(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
             label = { Text("Home") },
-            selected = true,
+            selected = navController.currentDestination?.route == Screen.Home.route,
             onClick = {
-                navigator.navigate(HomeScreenDestination())
+                navController.navigate(Screen.Home.route)
             },
         )
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Favorite, contentDescription = "Library") },
             label = { Text("Library") },
-            selected = false,
+            selected = navController.currentDestination?.route == Screen.RecipeLibrary.route,
             onClick = {
-                navigator.navigate(RecipeLibraryScreenDestination())
+                navController.navigate(Screen.RecipeLibrary.route)
             },
         )
         NavigationBarItem(
             icon = { Icon(Icons.Filled.AccountCircle, contentDescription = "Add Recipe") },
             label = { Text("Add Recipe") },
-            selected = false,
+            selected = navController.currentDestination?.route == Screen.AddRecipe.route,
             onClick = {
-                navigator.navigate(AddRecipeScreenDestination())
+                navController.navigate(Screen.AddRecipe.route)
             },
         )
     }
@@ -88,79 +133,73 @@ fun AppTopBar(
     )
 }
 
-
-
-
-
 // Composable Recipe card for the library and the AI chat
 @Composable
 fun RecipeCard() {
-
-    //Main box
+    // Main box
     Box {
-
         Row(
-            modifier = Modifier
-                .shadow(
-                    elevation = 4.dp,
-                    spotColor = Color(0x40000000),
-                    ambientColor = Color(0x40000000)
-                )
-                .border(
-                    width = 2.dp,
-                    color = Color(0xFF74CD66),
-                    shape = RoundedCornerShape(size = 10.dp)
-                )
-                .width(319.dp)
-                .height(110.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 10.dp))
-                .padding(end = 13.dp),
-
+            modifier =
+                Modifier
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000),
+                    )
+                    .border(
+                        width = 2.dp,
+                        color = Color(0xFF74CD66),
+                        shape = RoundedCornerShape(size = 10.dp),
+                    )
+                    .width(319.dp)
+                    .height(110.dp)
+                    .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 10.dp))
+                    .padding(end = 13.dp),
             horizontalArrangement = Arrangement.spacedBy(17.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-
             Row(
-                modifier = Modifier.padding(5.dp), verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.padding(5.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-
-                //Big Picture
+                // Big Picture
                 Image(
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp),
+                    modifier =
+                        Modifier
+                            .width(100.dp)
+                            .height(100.dp),
                     painter = painterResource(id = R.drawable.chicken_and_potatoes),
                     contentDescription = "image description",
-                    contentScale = ContentScale.FillBounds
+                    contentScale = ContentScale.FillBounds,
                 )
 
                 // Box next to the big picture
                 Box(modifier = Modifier.padding(start = 5.dp)) {
-
-
                     // Column with three rows
 
                     Column(
-                        modifier = Modifier
-                            .padding(0.dp)
-                            .fillMaxHeight(),
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-
-                        //Top row
-                        Box(
-                            modifier = Modifier
+                        modifier =
+                            Modifier
                                 .padding(0.dp)
-                                .fillMaxWidth(),
-                            Alignment.TopEnd
+                                .fillMaxHeight(),
+                        verticalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        // Top row
+                        Box(
+                            modifier =
+                                Modifier
+                                    .padding(0.dp)
+                                    .fillMaxWidth(),
+                            Alignment.TopEnd,
                         ) {
                             Image(
-                                modifier = Modifier
-                                    .width(20.dp)
-                                    .height(20.dp),
+                                modifier =
+                                    Modifier
+                                        .width(20.dp)
+                                        .height(20.dp),
                                 painter = painterResource(id = R.drawable.iconstar),
                                 contentDescription = "image description",
-                                contentScale = ContentScale.FillBounds
+                                contentScale = ContentScale.FillBounds,
                             )
                         }
 
@@ -169,34 +208,38 @@ fun RecipeCard() {
                             Text(text = "Text")
                         }
 
-                        //Bottom row
-                        Row(   modifier = Modifier
-                            .padding(0.dp)
-                            .fillMaxWidth(),
-                            Arrangement.End) {
+                        // Bottom row
+                        Row(
+                            modifier =
+                                Modifier
+                                    .padding(0.dp)
+                                    .fillMaxWidth(),
+                            Arrangement.End,
+                        ) {
                             Text(text = "4")
                             Image(
-                                modifier = Modifier
-                                    .width(20.dp)
-                                    .height(20.dp),
+                                modifier =
+                                    Modifier
+                                        .width(20.dp)
+                                        .height(20.dp),
                                 painter = painterResource(id = R.drawable.iconuser),
                                 contentDescription = "image description",
-                                contentScale = ContentScale.FillBounds
+                                contentScale = ContentScale.FillBounds,
                             )
                             Spacer(modifier = Modifier.width(20.dp))
 
                             Text(text = "1:30")
 
                             Image(
-                                modifier = Modifier
-                                    .width(20.dp)
-                                    .height(20.dp),
+                                modifier =
+                                    Modifier
+                                        .width(20.dp)
+                                        .height(20.dp),
                                 painter = painterResource(id = R.drawable.iconclock),
                                 contentDescription = "image description",
-                                contentScale = ContentScale.FillBounds)
+                                contentScale = ContentScale.FillBounds,
+                            )
                         }
-
-
                     }
                 }
             }

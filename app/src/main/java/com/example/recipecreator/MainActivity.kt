@@ -16,20 +16,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.example.recipecreator.data.local.AppDatabase
 import com.example.recipecreator.data.repository.RecipeRepository
-import com.example.recipecreator.ui.screens.NavGraphs
 import com.example.recipecreator.ui.theme.RecipeWizardTheme
-import com.example.recipecreator.ui.viewmodels.AddRecipeViewModel
-import com.ramcosta.composedestinations.DestinationsNavHost
+import com.example.recipecreator.ui.uicomponents.MainView
+import com.example.recipecreator.ui.viewmodels.RecipeViewModel
 
 class MainActivity : ComponentActivity() {
     private val db by lazy {
         Room.databaseBuilder(this, AppDatabase::class.java, "database.db").build()
     }
-    private val addRecipeViewModel by viewModels<AddRecipeViewModel>(
+    private val recipeViewModel by viewModels<RecipeViewModel>(
         factoryProducer = {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return AddRecipeViewModel(RecipeRepository(db.recipeDao())) as T
+                    return RecipeViewModel(RecipeRepository(db.recipeDao())) as T
                 }
             }
         },
@@ -39,7 +38,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             RecipeWizardTheme {
-                DestinationsNavHost(navGraph = NavGraphs.root)
+                MainView(recipeViewModel)
             }
         }
     }

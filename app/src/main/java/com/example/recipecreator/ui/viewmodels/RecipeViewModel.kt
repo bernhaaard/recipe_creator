@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipecreator.data.repository.RecipeRepository
 import com.example.recipecreator.model.Recipe
+import com.example.recipecreator.ui.uicomponents.Screen
 import com.example.recipecreator.ui.viewstates.RecipeViewState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(private val recipeRepository: RecipeRepository) : ViewModel() {
@@ -54,4 +56,8 @@ class RecipeViewModel(private val recipeRepository: RecipeRepository) : ViewMode
         }
     }
     // Additional logic and methods as required
+
+    fun selectScreen(screen: Screen) {
+        _recipeViewState.update { it.copy(selectedScreen = screen) }
+    }
 }

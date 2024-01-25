@@ -33,19 +33,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.recipecreator.R
 import com.example.recipecreator.ui.uicomponents.AppTopBar
-import com.example.recipecreator.ui.uicomponents.NavigationBar
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
 @Composable
-fun AddRecipeScreen(navigator: DestinationsNavigator) {
+fun AddRecipeScreen() {
     Scaffold(
         topBar = {
             AppTopBar(title = "Add Recipe")
         },
         bottomBar = {
-            NavigationBar(navigator = navigator)
         },
         content = { padding ->
             val scrollState = rememberScrollState()
