@@ -24,16 +24,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.recipecreator.R
+import com.example.recipecreator.model.Ingredient
+import com.example.recipecreator.model.Recipe
 import com.example.recipecreator.ui.uicomponents.AppTopBar
 import com.example.recipecreator.ui.viewmodels.RecipeViewModel
 
@@ -45,34 +51,40 @@ fun AddRecipeScreen(recipeViewModel: RecipeViewModel) {
         },
         bottomBar = {
         },
-        content = { padding ->
-            val scrollState = rememberScrollState()
-            Column(
+    ) { padding ->
+        val scrollState = rememberScrollState()
+        Column(
+            modifier =
+                Modifier
+                    .verticalScroll(state = scrollState)
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(padding)
+                    .padding(32.dp),
+            Arrangement.Center,
+            Alignment.CenterHorizontally,
+        ) {
+            val title = remember { mutableStateOf("") }
+            val ingredients = remember { mutableStateListOf(Ingredient("", "")) }
+            val instructions by remember { mutableStateOf("") }
+            AddRecipeImage()
+            RecipeNameInput(title)
+            IngredientsList(ingredients)
+            InstructionsList()
+            Button(
+                onClick = {
+                    recipeViewModel.insertRecipe(
+                        Recipe(title = title.value, ingredients = ingredients, instructions = instructions, favorite = false),
+                    )
+                },
                 modifier =
                     Modifier
-                        .verticalScroll(state = scrollState)
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(padding)
-                        .padding(32.dp),
-                Arrangement.Center,
-                Alignment.CenterHorizontally,
+                        .width(320.dp),
             ) {
-                AddRecipeImage()
-                RecipeNameInput()
-                IngredientsList()
-                InstructionsList()
-                Button(
-                    onClick = { /*TODO*/ },
-                    modifier =
-                        Modifier
-                            .width(320.dp),
-                ) {
-                    Text(text = "Save Recipe")
-                }
+                Text(text = "Save Recipe")
             }
-        },
-    )
+        }
+    }
 }
 
 @Composable
@@ -95,7 +107,7 @@ fun AddRecipeImage() {
 }
 
 @Composable
-fun RecipeNameInput() {
+fun RecipeNameInput(title: MutableState<String>) {
     Column(
         modifier =
             Modifier
@@ -109,7 +121,7 @@ fun RecipeNameInput() {
                     .padding(0.dp),
             Color(0xFF74CD66),
         )
-        var recipeName = "placeholder (please change)"
+
         TextField(
             modifier =
                 Modifier
@@ -120,41 +132,90 @@ fun RecipeNameInput() {
                         color = Color.LightGray,
                         shape = RoundedCornerShape(size = 12.5.dp),
                     ),
-            value = recipeName,
-            onValueChange = { recipeName = it },
+            value = title.value,
+            onValueChange = { newTitle -> title.value = newTitle },
+            label = { Text(text = "title") },
         )
     }
 }
 
 @Composable
-fun NewIngredientItem() {
-    var ingredient = "Add another ingredient"
-    TextField(
-        modifier =
-            Modifier
-                .padding(bottom = 16.dp)
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(12.5.dp))
-                .border(
-                    width = 1.dp,
-                    color = Color(0xFF74CD66),
-                    shape = RoundedCornerShape(size = 12.5.dp),
-                ),
-        value = ingredient,
-        textStyle = TextStyle(Color(0xFF74CD66)),
-        onValueChange = { ingredient = it },
-    )
+fun IngredientsList(ingredients: MutableList<Ingredient>) {
+    Row {
+        Text(
+            text = "Ingredients",
+            modifier =
+                Modifier
+                    .padding(bottom = 8.dp),
+            Color(0xFF74CD66),
+        )
+        Box(modifier = Modifier.padding(0.dp)) {
+            // Row for the "4Users" and "Time"
+            Row(
+                modifier =
+                    Modifier
+                        .padding(0.dp)
+                        .fillMaxWidth(),
+                Arrangement.End,
+            ) {
+                Text(text = "4")
+                Image(
+                    modifier =
+                        Modifier
+                            .width(20.dp)
+                            .height(20.dp),
+                    painter = painterResource(id = R.drawable.iconuser),
+                    contentDescription = "image description",
+                    contentScale = ContentScale.FillBounds,
+                )
+                Spacer(modifier = Modifier.width(20.dp))
+                Text(text = "Time")
+                Spacer(modifier = Modifier.width(8.dp))
+                Image(
+                    modifier =
+                        Modifier
+                            .width(20.dp)
+                            .height(20.dp),
+                    painter = painterResource(id = R.drawable.iconclock),
+                    contentDescription = "image description",
+                    contentScale = ContentScale.FillBounds,
+                )
+            }
+        }
+    }
+    ingredients.forEachIndexed { index, ingredient ->
+        val quantityState = remember { mutableStateOf(ingredient.quantity) }
+        val nameState = remember { mutableStateOf(ingredient.name) }
+
+        IngredientItem(
+            quantity = quantityState.value,
+            name = nameState.value,
+            onQuantityChange = { newQuantity ->
+                quantityState.value = newQuantity
+                ingredients[index] = ingredients[index].copy(quantity = newQuantity)
+            },
+            onNameChange = { newName ->
+                nameState.value = newName
+                ingredients[index] = ingredients[index].copy(name = newName)
+            },
+        )
+    }
+    NewIngredientButton(ingredients = ingredients)
 }
 
 @Composable
-fun IngredientItem() {
+fun IngredientItem(
+    quantity: String,
+    name: String,
+    onNameChange: (String) -> Unit,
+    onQuantityChange: (String) -> Unit,
+) {
     Row(
         modifier =
             Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp),
     ) {
-        var quantity = "0"
         TextField(
             modifier =
                 Modifier
@@ -167,9 +228,8 @@ fun IngredientItem() {
                     ),
             value = quantity,
             textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-            onValueChange = { quantity = it },
+            onValueChange = onQuantityChange,
         )
-        var ingredient = "Write your ingredient here..."
 
         TextField(
             modifier =
@@ -182,65 +242,23 @@ fun IngredientItem() {
                         color = Color.LightGray,
                         shape = RoundedCornerShape(size = 12.5.dp),
                     ),
-            value = ingredient,
-            onValueChange = { ingredient = it },
+            value = name,
+            onValueChange = onNameChange,
         )
     }
 }
 
 @Composable
-fun IngredientsList() {
-    Column(
+fun NewIngredientButton(ingredients: MutableList<Ingredient>) {
+    Button(
         modifier =
             Modifier
-                .padding(bottom = 16.dp),
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.5.dp)),
+        onClick = { ingredients.add(Ingredient("", "")) },
     ) {
-        Row {
-            Text(
-                text = "Ingredients",
-                modifier =
-                    Modifier
-                        .padding(bottom = 8.dp),
-                Color(0xFF74CD66),
-            )
-            Box(modifier = Modifier.padding(0.dp)) {
-                // Row for the "4Users" and "Time"
-                Row(
-                    modifier =
-                        Modifier
-                            .padding(0.dp)
-                            .fillMaxWidth(),
-                    Arrangement.End,
-                ) {
-                    Text(text = "4")
-                    Image(
-                        modifier =
-                            Modifier
-                                .width(20.dp)
-                                .height(20.dp),
-                        painter = painterResource(id = R.drawable.iconuser),
-                        contentDescription = "image description",
-                        contentScale = ContentScale.FillBounds,
-                    )
-                    Spacer(modifier = Modifier.width(20.dp))
-                    Text(text = "Time")
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Image(
-                        modifier =
-                            Modifier
-                                .width(20.dp)
-                                .height(20.dp),
-                        painter = painterResource(id = R.drawable.iconclock),
-                        contentDescription = "image description",
-                        contentScale = ContentScale.FillBounds,
-                    )
-                }
-            }
-        }
-        IngredientItem()
-        IngredientItem()
-        IngredientItem()
-        NewIngredientItem()
+        Text("Add New Ingredient")
     }
 }
 
@@ -277,70 +295,6 @@ fun InstructionsList() {
             // Add a Composable named InstructionSteps (located below this Composable)
             InstructionStep()
             InstructionStep()
-        }
-    }
-}
-
-@Composable
-fun AddRecipeView() {
-    Column(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(0.dp),
-        Arrangement.Center,
-        Alignment.CenterHorizontally,
-    ) {
-        Column(
-            modifier =
-                Modifier
-                    .padding(16.dp)
-                    .width(320.dp),
-        ) {
-            // Instruction header and Text-fields
-
-            // Box with Instruction steps
-            Column(
-                modifier =
-                    Modifier
-                        .wrapContentHeight()
-                        .width(320.dp)
-                        .padding(bottom = 0.dp)
-                        .background(Color.White)
-                        .border(
-                            width = 1.dp,
-                            color = Color(0xFF74CD66),
-                            shape = RoundedCornerShape(size = 12.5.dp),
-                        ),
-                Arrangement.Center,
-                Alignment.CenterHorizontally,
-            ) {
-                // Add a Composable named InstructionSteps (located below this Composable)
-                InstructionStep()
-                InstructionStep()
-            }
-
-            // Add Another ingredient TextField for Instruction
-            var text6 = "Add another ingredient"
-            TextField(
-                modifier =
-                    Modifier
-                        .padding(top = 10.dp)
-                        .width(320.dp)
-                        .clip(RoundedCornerShape(12.5.dp))
-                        .border(
-                            width = 1.dp,
-                            color = Color(0xFF74CD66),
-                            shape = RoundedCornerShape(size = 12.5.dp),
-                        ),
-                value = text6,
-                textStyle = TextStyle(Color(0xFF74CD66)),
-                onValueChange = { text6 = it },
-            )
-
-            Spacer(modifier = Modifier.padding(20.dp))
-
-            // Button to save the Recipe
         }
     }
 }

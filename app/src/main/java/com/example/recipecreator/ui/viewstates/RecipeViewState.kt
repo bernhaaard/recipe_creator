@@ -5,6 +5,7 @@ import com.example.recipecreator.ui.uicomponents.Screen
 
 data class RecipeViewState(
     val recipes: List<Recipe> = emptyList(),
+    val currentRecipe: Recipe? = null,
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val isEditing: Boolean = false,
