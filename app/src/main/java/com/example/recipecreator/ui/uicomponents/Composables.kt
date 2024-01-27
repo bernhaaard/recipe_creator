@@ -61,7 +61,7 @@ fun MainView(recipeViewModel: RecipeViewModel) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(navController)
+            BottomNavigationBar(navController, state.value.selectedScreen)
         },
     ) {
         NavHost(
@@ -86,12 +86,15 @@ fun MainView(recipeViewModel: RecipeViewModel) {
 }
 
 @Composable
-fun BottomNavigationBar(navController: NavController) {
+fun BottomNavigationBar(
+    navController: NavController,
+    selectedScreen: Screen,
+) {
     NavigationBar(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
             label = { Text("Home") },
-            selected = navController.currentDestination?.route == Screen.Home.route,
+            selected = selectedScreen == Screen.Home,
             onClick = {
                 navController.navigate(Screen.Home.route)
             },
@@ -99,7 +102,7 @@ fun BottomNavigationBar(navController: NavController) {
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Favorite, contentDescription = "Library") },
             label = { Text("Library") },
-            selected = navController.currentDestination?.route == Screen.RecipeLibrary.route,
+            selected = selectedScreen == Screen.RecipeLibrary,
             onClick = {
                 navController.navigate(Screen.RecipeLibrary.route)
             },
@@ -107,7 +110,7 @@ fun BottomNavigationBar(navController: NavController) {
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Add, contentDescription = "Add Recipe") },
             label = { Text("Add Recipe") },
-            selected = navController.currentDestination?.route == Screen.AddRecipe.route,
+            selected = selectedScreen == Screen.AddRecipe,
             onClick = {
                 navController.navigate(Screen.AddRecipe.route)
             },
