@@ -33,273 +33,163 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.recipecreator.R
 import com.example.recipecreator.ui.uicomponents.AppTopBar
+import com.example.recipecreator.ui.viewmodels.RecipeViewModel
+// This is just the template for the Ad recipe function, everything is hardcoded right now,
 
 @Composable
-fun AddRecipeScreen() {
-    Scaffold(
-        topBar = {
-            AppTopBar(title = "Add Recipe")
-        },
-        bottomBar = {
-        },
-        content = { padding ->
-            val scrollState = rememberScrollState()
-            Column(
-                modifier =
-                    Modifier
-                        .verticalScroll(state = scrollState)
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(padding)
-                        .padding(32.dp),
-                Arrangement.Center,
-                Alignment.CenterHorizontally,
-            ) {
-                AddRecipeImage()
-                RecipeNameInput()
-                IngredientsList()
-                InstructionsList()
-                Button(
-                    onClick = { /*TODO*/ },
-                    modifier =
-                        Modifier
-                            .width(320.dp),
-                ) {
-                    Text(text = "Save Recipe")
-                }
-            }
-        },
-    )
-}
+fun AddRecipeScreen(viewModel: RecipeViewModel) {
 
-@Composable
-fun AddRecipeImage() {
-    Box(
-        modifier =
-            Modifier
-                .padding(bottom = 16.dp)
-                .fillMaxWidth()
-                .height(180.dp)
-                .border(
-                    width = 1.dp,
-                    color = Color.LightGray,
-                    shape = RoundedCornerShape(size = 12.5.dp),
-                ),
-        Alignment.Center,
-    ) {
-        Text(text = "Add Picture")
-    }
-}
 
-@Composable
-fun RecipeNameInput() {
+
+
+
+
+
+    val scrollState = rememberScrollState()
     Column(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-    ) {
-        Text(
-            text = "Recipe name",
-            modifier =
-                Modifier
-                    .padding(0.dp),
-            Color(0xFF74CD66),
-        )
-        var recipeName = "placeholder (please change)"
-        TextField(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.5.dp))
-                    .border(
-                        width = 1.dp,
-                        color = Color.LightGray,
-                        shape = RoundedCornerShape(size = 12.5.dp),
-                    ),
-            value = recipeName,
-            onValueChange = { recipeName = it },
-        )
-    }
-}
+        modifier = Modifier
+            .verticalScroll(state = scrollState)
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(20.dp),
 
-@Composable
-fun NewIngredientItem() {
-    var ingredient = "Add another ingredient"
-    TextField(
-        modifier =
-            Modifier
-                .padding(bottom = 16.dp)
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(12.5.dp))
-                .border(
-                    width = 1.dp,
-                    color = Color(0xFF74CD66),
-                    shape = RoundedCornerShape(size = 12.5.dp),
-                ),
-        value = ingredient,
-        textStyle = TextStyle(Color(0xFF74CD66)),
-        onValueChange = { ingredient = it },
-    )
-}
-
-@Composable
-fun IngredientItem() {
-    Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp),
-    ) {
-        var quantity = "0"
-        TextField(
-            modifier =
-                Modifier
-                    .width(64.dp)
-                    .clip(RoundedCornerShape(12.5.dp))
-                    .border(
-                        width = 1.dp,
-                        color = Color.LightGray,
-                        shape = RoundedCornerShape(size = 12.5.dp),
-                    ),
-            value = quantity,
-            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-            onValueChange = { quantity = it },
-        )
-        var ingredient = "Write your ingredient here..."
-
-        TextField(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp)
-                    .clip(RoundedCornerShape(12.5.dp))
-                    .border(
-                        width = 1.dp,
-                        color = Color.LightGray,
-                        shape = RoundedCornerShape(size = 12.5.dp),
-                    ),
-            value = ingredient,
-            onValueChange = { ingredient = it },
-        )
-    }
-}
-
-@Composable
-fun IngredientsList() {
-    Column(
-        modifier =
-            Modifier
-                .padding(bottom = 16.dp),
-    ) {
-        Row {
-            Text(
-                text = "Ingredients",
-                modifier =
-                    Modifier
-                        .padding(bottom = 8.dp),
-                Color(0xFF74CD66),
-            )
-            Box(modifier = Modifier.padding(0.dp)) {
-                // Row for the "4Users" and "Time"
-                Row(
-                    modifier =
-                        Modifier
-                            .padding(0.dp)
-                            .fillMaxWidth(),
-                    Arrangement.End,
-                ) {
-                    Text(text = "4")
-                    Image(
-                        modifier =
-                            Modifier
-                                .width(20.dp)
-                                .height(20.dp),
-                        painter = painterResource(id = R.drawable.iconuser),
-                        contentDescription = "image description",
-                        contentScale = ContentScale.FillBounds,
-                    )
-                    Spacer(modifier = Modifier.width(20.dp))
-                    Text(text = "Time")
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Image(
-                        modifier =
-                            Modifier
-                                .width(20.dp)
-                                .height(20.dp),
-                        painter = painterResource(id = R.drawable.iconclock),
-                        contentDescription = "image description",
-                        contentScale = ContentScale.FillBounds,
-                    )
-                }
-            }
-        }
-        IngredientItem()
-        IngredientItem()
-        IngredientItem()
-        NewIngredientItem()
-    }
-}
-
-@Composable
-fun InstructionsList() {
-    Column(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-    ) {
-        Text(
-            text = "Instructions",
-            modifier =
-                Modifier
-                    .padding(bottom = 8.dp),
-            Color(0xFF74CD66),
-        )
-        Column(
-            modifier =
-                Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .padding(bottom = 0.dp)
-                    .background(Color.White)
-                    .border(
-                        width = 1.dp,
-                        color = Color(0xFF74CD66),
-                        shape = RoundedCornerShape(size = 12.5.dp),
-                    ),
-            Arrangement.Center,
-            Alignment.CenterHorizontally,
         ) {
-            // Add a Composable named InstructionSteps (located below this Composable)
-            InstructionStep()
-            InstructionStep()
-        }
-    }
-}
 
-@Composable
-fun AddRecipeView() {
-    Column(
-        modifier =
-            Modifier
+        Column(
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(0.dp),
-        Arrangement.Center,
-        Alignment.CenterHorizontally,
-    ) {
-        Column(
-            modifier =
-                Modifier
-                    .padding(16.dp)
-                    .width(320.dp),
+            Arrangement.Center,
+            Alignment.CenterHorizontally
         ) {
-            // Instruction header and Text-fields
 
-            // Box with Instruction steps
+
+            // The big picture at top
+            Box(
+                modifier = Modifier
+                    .padding(0.dp)
+                    .width(320.dp)
+                    .height(180.dp)
+                    .border(
+                        width = 1.dp,
+                        color = Color.LightGray,
+                        shape = RoundedCornerShape(size = 12.5.dp)
+                    ),
+                Alignment.Center,
+            ) { Text(text = "Add Picture") }
+
+
+// "Recipe" header with the recipeName Textfield
             Column(
-                modifier =
-                    Modifier
+                modifier = Modifier
+                    .padding(16.dp)
+                    .width(320.dp)
+            ) {
+                Text(
+                    text = "Recipe name",
+                    modifier = Modifier
+                        .padding(0.dp),
+                    Color(0xFF74CD66)
+                )
+                var text = "no Value implemented for this yet"
+                TextField(
+                    modifier = Modifier
+                        .width(320.dp)
+                        .clip(RoundedCornerShape(12.5.dp))
+                        .border(
+                            width = 1.dp,
+                            color = Color.LightGray,
+                            shape = RoundedCornerShape(size = 12.5.dp)
+                        ),
+                    value = "RecipeName",
+                    onValueChange = { text = it },
+                )
+            }
+// Ingredients Header and textfields
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .width(320.dp)
+            ) {
+                // Ingredients Text and icons start here
+                Row {
+                    Text(
+                        text = "Ingredients",
+                        modifier = Modifier
+                            .padding(bottom = 8.dp),
+                        Color(0xFF74CD66)
+                    )
+                    Box(modifier = Modifier.padding(0.dp))
+                    {
+
+                        // Row for the "4Users" and "Time"
+                        Row(
+                            modifier = Modifier
+                                .padding(0.dp)
+                                .fillMaxWidth(),
+                            Arrangement.End
+                        ) {
+                            Text(text = "4")
+                            Image(
+                                modifier = Modifier
+                                    .width(20.dp)
+                                    .height(20.dp),
+                                painter = painterResource(id = R.drawable.iconuser),
+                                contentDescription = "image description",
+                                contentScale = ContentScale.FillBounds
+                            )
+                            Spacer(modifier = Modifier.width(20.dp))
+
+
+
+                            Text(text = "Time")
+                            Image(
+                                modifier = Modifier
+                                    .width(20.dp)
+                                    .height(20.dp),
+                                painter = painterResource(id = R.drawable.iconclock),
+                                contentDescription = "image description",
+                                contentScale = ContentScale.FillBounds
+                            )
+                        }
+                    }
+                }
+
+// Composables to add ingredients - located underneath this composable
+                AddIngredients()
+                AddIngredients()
+                AddIngredients()
+
+// Add Another ingredient TextField
+                var text4 = "Add another ingredient"
+                TextField(
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .width(320.dp)
+                        .clip(RoundedCornerShape(12.5.dp))
+                        .border(
+                            width = 1.dp,
+                            color = Color(0xFF74CD66),
+                            shape = RoundedCornerShape(size = 12.5.dp)
+                        ),
+                    value = text4,
+                    textStyle = TextStyle(Color(0xFF74CD66)),
+                    onValueChange = { text4 = it },
+                )
+
+
+                // Instruction header and Textfields
+
+                Text(
+                    text = "Instructions",
+                    modifier = Modifier
+                        .padding(bottom = 8.dp, top = 20.dp),
+                    Color(0xFF74CD66)
+                )
+
+                // Box with Instruction steps
+                Column(
+                    modifier = Modifier
                         .wrapContentHeight()
                         .width(320.dp)
                         .padding(bottom = 0.dp)
@@ -307,73 +197,129 @@ fun AddRecipeView() {
                         .border(
                             width = 1.dp,
                             color = Color(0xFF74CD66),
-                            shape = RoundedCornerShape(size = 12.5.dp),
+                            shape = RoundedCornerShape(size = 12.5.dp)
                         ),
-                Arrangement.Center,
-                Alignment.CenterHorizontally,
-            ) {
-                // Add a Composable named InstructionSteps (located below this Composable)
-                InstructionStep()
-                InstructionStep()
-            }
+                    Arrangement.Center,
+                    Alignment.CenterHorizontally
+                )
+                {
+// Add a Composable named InstructionSteps (located below this Composable)
+                    InstructionSteps()
+                    InstructionSteps()
 
-            // Add Another ingredient TextField for Instruction
-            var text6 = "Add another ingredient"
-            TextField(
-                modifier =
-                    Modifier
+
+                }
+
+
+                // Add Another ingredient TextField for Instruction
+                var text6 = "Add another ingredient"
+                TextField(
+                    modifier = Modifier
                         .padding(top = 10.dp)
                         .width(320.dp)
                         .clip(RoundedCornerShape(12.5.dp))
                         .border(
                             width = 1.dp,
                             color = Color(0xFF74CD66),
-                            shape = RoundedCornerShape(size = 12.5.dp),
+                            shape = RoundedCornerShape(size = 12.5.dp)
                         ),
-                value = text6,
-                textStyle = TextStyle(Color(0xFF74CD66)),
-                onValueChange = { text6 = it },
-            )
+                    value = text6,
+                    textStyle = TextStyle(Color(0xFF74CD66)),
+                    onValueChange = { text6 = it },
+                )
 
-            Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.padding(20.dp))
 
-            // Button to save the Recipe
+                // Button to save the Recipe
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .width(320.dp)
+                ) {
+                    Text(text = "Save Recipe")
+                }
+
+
+            }
         }
     }
 }
 
-// Composable for Steps + Textfield
-@Composable
-fun InstructionStep() {
-    // A Text with "steps" and a Textfield inside a column
-    Column(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-    ) {
-        Text(
-            text = "Step 1",
-            modifier =
-                Modifier
-                    .padding(),
-            Color(0xFF74CD66),
-        )
 
-        var instruction = "Start writing here!"
+
+// Composable to add another Ingredient
+@Composable
+fun AddIngredients() {
+
+    // Text field with value "0" and Textfield with value "Write our ingredients here..." inside a row
+    Row(
+        modifier = Modifier.width(320.dp),
+    ) {
+        var text2 = "0"
         TextField(
-            modifier =
-                Modifier
-                    .width(270.dp)
-                    .padding()
-                    .clip(RoundedCornerShape(12.5.dp))
-                    .border(
-                        width = 1.dp,
-                        color = Color.LightGray,
-                        shape = RoundedCornerShape(size = 12.5.dp),
-                    ),
-            value = instruction,
-            onValueChange = { instruction = it },
+            modifier = Modifier
+                .padding(end = 5.dp)
+                .width(66.dp)
+                .clip(RoundedCornerShape(12.5.dp))
+                .border(
+                    width = 1.dp,
+                    color = Color.LightGray,
+                    shape = RoundedCornerShape(size = 12.5.dp)
+                ),
+            value = text2,
+            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
+            onValueChange = { text2 = it },
+        )
+        var text3 = "Write your ingredient here..."
+
+        TextField(
+            modifier = Modifier
+                .width(250.dp)
+                .padding(start = 6.dp)
+                .clip(RoundedCornerShape(12.5.dp))
+                .border(
+                    width = 1.dp,
+                    color = Color.LightGray,
+                    shape = RoundedCornerShape(size = 12.5.dp)
+                ),
+            value = text3,
+            onValueChange = { text3 = it },
         )
     }
 }
+
+
+
+
+
+// Composable for Steps + Textfield
+@Composable
+fun InstructionSteps() {
+
+    // A Text with "steps" and a Textfield inside a column
+    Column(
+        modifier = Modifier
+            .width(270.dp)
+    ) {
+        Text(
+            text = "Step 1",
+            modifier = Modifier
+                .padding(bottom = 8.dp, top = 20.dp),
+            Color(0xFF74CD66)
+        )
+
+        var text6 = "Start writing here!"
+        TextField(
+            modifier = Modifier
+                .width(270.dp)
+                .padding(bottom = 10.dp)
+                .clip(RoundedCornerShape(12.5.dp))
+                .border(
+                    width = 1.dp,
+                    color = Color.LightGray,
+                    shape = RoundedCornerShape(size = 12.5.dp)
+                ),
+            value = text6,
+            onValueChange = { text6 = it },
+        )
+    }}
