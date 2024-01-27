@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
@@ -33,12 +35,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.recipecreator.R
 import com.example.recipecreator.ui.uicomponents.AppTopBar
+import com.example.recipecreator.ui.viewmodels.RecipeViewModel
 
 @Composable
-fun AddRecipeScreen() {
+fun AddRecipeScreen(recipeViewModel: RecipeViewModel) {
     Scaffold(
         topBar = {
-            AppTopBar(title = "Add Recipe")
+            AppTopBar(title = "Add Recipe", iconName = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back Button")
         },
         bottomBar = {
         },

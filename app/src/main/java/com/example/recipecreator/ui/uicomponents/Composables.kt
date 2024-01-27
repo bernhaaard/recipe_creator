@@ -15,8 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -71,15 +71,15 @@ fun MainView(recipeViewModel: RecipeViewModel) {
         ) {
             composable(Screen.Home.route) {
                 recipeViewModel.selectScreen(Screen.Home)
-                HomeScreen()
+                HomeScreen(recipeViewModel)
             }
             composable(Screen.RecipeLibrary.route) {
                 recipeViewModel.selectScreen(Screen.RecipeLibrary)
-                RecipeLibraryScreen()
+                RecipeLibraryScreen(recipeViewModel)
             }
             composable(Screen.AddRecipe.route) {
                 recipeViewModel.selectScreen(Screen.AddRecipe)
-                AddRecipeScreen()
+                AddRecipeScreen(recipeViewModel)
             }
         }
     }
@@ -105,7 +105,7 @@ fun BottomNavigationBar(navController: NavController) {
             },
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Filled.AccountCircle, contentDescription = "Add Recipe") },
+            icon = { Icon(Icons.Filled.Add, contentDescription = "Add Recipe") },
             label = { Text("Add Recipe") },
             selected = navController.currentDestination?.route == Screen.AddRecipe.route,
             onClick = {
@@ -121,15 +121,23 @@ fun BottomNavigationBar(navController: NavController) {
 fun AppTopBar(
     title: String,
     onBackClick: () -> Unit = {},
+    iconName: ImageVector,
+    contentDescription: String,
 ) {
     // TopBar Composable
     TopAppBar(
         title = { Text(text = title) },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back Button")
+                Icon(imageVector = iconName, contentDescription = contentDescription)
             }
         },
+        modifier =
+            Modifier
+                .padding(bottom = 8.dp)
+                .shadow(
+                    elevation = 8.dp,
+                ),
     )
 }
 
