@@ -3,6 +3,7 @@ package com.example.recipecreator.ui.uicomponents
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.recipecreator.R
 import com.example.recipecreator.ui.screens.AddRecipeScreen
 import com.example.recipecreator.ui.screens.HomeScreen
+import com.example.recipecreator.ui.screens.RecipeDetailScreen
 import com.example.recipecreator.ui.screens.RecipeLibraryScreen
 import com.example.recipecreator.ui.viewmodels.RecipeViewModel
 
@@ -53,6 +55,12 @@ sealed class Screen(val route: String) {
     object RecipeLibrary : Screen("recipeLibrary")
 
     object AddRecipe : Screen("addRecipe")
+
+    object RecipeDetailView : Screen("recipeDetail")
+
+    object EditRecipe : Screen("editRecipe")
+
+
 }
 
 @Composable
@@ -75,11 +83,19 @@ fun MainView(recipeViewModel: RecipeViewModel) {
             }
             composable(Screen.RecipeLibrary.route) {
                 recipeViewModel.selectScreen(Screen.RecipeLibrary)
-                RecipeLibraryScreen(recipeViewModel)
+                RecipeLibraryScreen(recipeViewModel, navController)
             }
             composable(Screen.AddRecipe.route) {
                 recipeViewModel.selectScreen(Screen.AddRecipe)
                 AddRecipeScreen(recipeViewModel)
+            }
+            composable(Screen.RecipeDetailView.route) {
+                recipeViewModel.selectScreen(Screen.RecipeDetailView)
+                RecipeDetailScreen(recipeViewModel, navController)
+            }
+            composable(Screen.EditRecipe.route) {
+                recipeViewModel.selectScreen(Screen.EditRecipe)
+                EditRecipeScreen(recipeViewModel, navController)
             }
         }
     }
@@ -146,9 +162,9 @@ fun AppTopBar(
 
 // Composable Recipe card for the library and the AI chat
 @Composable
-fun RecipeCard() {
+fun RecipeCard(navController: NavController) {
     // Main box
-    Box {
+    Box(modifier = Modifier.clickable { navController.navigate(Screen.RecipeDetailView.route) }) {
         Row(
             modifier =
                 Modifier
