@@ -44,6 +44,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.recipecreator.R
 import com.example.recipecreator.ui.screens.AddRecipeScreen
+import com.example.recipecreator.ui.screens.EditRecipeScreen
 import com.example.recipecreator.ui.screens.HomeScreen
 import com.example.recipecreator.ui.screens.RecipeDetailScreen
 import com.example.recipecreator.ui.screens.RecipeLibraryScreen
@@ -56,11 +57,9 @@ sealed class Screen(val route: String) {
 
     object AddRecipe : Screen("addRecipe")
 
-    object RecipeDetailView : Screen("recipeDetail")
+    object RecipeDetail : Screen("recipeDetail")
 
     object EditRecipe : Screen("editRecipe")
-
-
 }
 
 @Composable
@@ -89,8 +88,8 @@ fun MainView(recipeViewModel: RecipeViewModel) {
                 recipeViewModel.selectScreen(Screen.AddRecipe)
                 AddRecipeScreen(recipeViewModel)
             }
-            composable(Screen.RecipeDetailView.route) {
-                recipeViewModel.selectScreen(Screen.RecipeDetailView)
+            composable(Screen.RecipeDetail.route) {
+                recipeViewModel.selectScreen(Screen.RecipeDetail)
                 RecipeDetailScreen(recipeViewModel, navController)
             }
             composable(Screen.EditRecipe.route) {
@@ -164,7 +163,7 @@ fun AppTopBar(
 @Composable
 fun RecipeCard(navController: NavController) {
     // Main box
-    Box(modifier = Modifier.clickable { navController.navigate(Screen.RecipeDetailView.route) }) {
+    Box(modifier = Modifier.clickable { navController.navigate(Screen.RecipeDetail.route) }) {
         Row(
             modifier =
                 Modifier
