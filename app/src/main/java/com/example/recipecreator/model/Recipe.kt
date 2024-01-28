@@ -11,6 +11,7 @@ data class Recipe(
     val title: String,
     @TypeConverters(Converters::class)
     val ingredients: List<Ingredient>,
-    val instructions: String,
+    @TypeConverters(Converters::class)
+    val instructions: List<Instruction>,
     val favorite: Boolean = false,
 )

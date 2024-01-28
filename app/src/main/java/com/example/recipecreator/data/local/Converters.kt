@@ -2,6 +2,7 @@ package com.example.recipecreator.data.local
 
 import androidx.room.TypeConverter
 import com.example.recipecreator.model.Ingredient
+import com.example.recipecreator.model.Instruction
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -17,5 +18,18 @@ class Converters {
         val gson = Gson()
         val type = object : TypeToken<List<String>>() {}.type
         return gson.fromJson(ingredients, type)
+    }
+
+    @TypeConverter
+    fun fromInstructionsList(instructions: List<Instruction>): String {
+        val gson = Gson()
+        return gson.toJson(instructions)
+    }
+
+    @TypeConverter
+    fun toInstructionList(instructions: String): List<Instruction> {
+        val gson = Gson()
+        val type = object : TypeToken<List<String>>() {}.type
+        return gson.fromJson(instructions, type)
     }
 }

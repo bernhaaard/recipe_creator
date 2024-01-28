@@ -41,6 +41,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.recipecreator.R
+import com.example.recipecreator.model.Recipe
 import com.example.recipecreator.ui.screens.AddRecipeScreen
 import com.example.recipecreator.ui.screens.EditRecipeScreen
 import com.example.recipecreator.ui.screens.HomeScreen
@@ -155,7 +156,10 @@ fun AppTopBar(
 
 // Composable Recipe card for the library and the AI chat
 @Composable
-fun RecipeCard(navController: NavController) {
+fun RecipeCard(
+    navController: NavController,
+    recipe: Recipe,
+) {
     // Main box
     Box(modifier = Modifier.clickable { navController.navigate(Screen.RecipeDetail.route) }) {
         Row(
@@ -225,7 +229,7 @@ fun RecipeCard(navController: NavController) {
 
                         // Middle text row
                         Box(modifier = Modifier.padding(0.dp)) {
-                            Text(text = "Text")
+                            Text(text = recipe.title)
                         }
 
                         // Bottom row

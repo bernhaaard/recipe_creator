@@ -1,6 +1,7 @@
 package com.example.recipecreator.ui.screens
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,14 +16,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,8 +36,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.recipecreator.model.Ingredient
+import com.example.recipecreator.model.Instruction
 import com.example.recipecreator.model.Recipe
 import com.example.recipecreator.ui.uicomponents.AppTopBar
+import com.example.recipecreator.ui.uicomponents.Screen
 import com.example.recipecreator.ui.viewmodels.RecipeViewModel
 
 @Composable
@@ -67,16 +71,17 @@ fun AddRecipeScreen(
         ) {
             val title = remember { mutableStateOf("") }
             val ingredients = remember { mutableStateListOf(Ingredient("", "")) }
-            val instructions by remember { mutableStateOf("") }
+            val instructions = remember { mutableStateListOf(Instruction(1, "")) }
             AddRecipeImage()
             RecipeNameInput(title)
             IngredientsList(ingredients)
-            InstructionsList()
+            InstructionsList(instructions)
             Button(
                 onClick = {
                     recipeViewModel.insertRecipe(
                         Recipe(title = title.value, ingredients = ingredients, instructions = instructions, favorite = false),
                     )
+                    navController.navigate(Screen.Home.route)
                 },
                 modifier =
                     Modifier
@@ -232,7 +237,7 @@ fun NewIngredientButton(ingredients: MutableList<Ingredient>) {
 }
 
 @Composable
-fun InstructionsList() {
+fun InstructionsList(instructions: MutableList<Instruction>) {
     Column(
         modifier =
             Modifier
@@ -261,6 +266,18 @@ fun InstructionsList() {
             Alignment.CenterHorizontally,
         ) {
             // Add a Composable named InstructionSteps (located below this Composable)
+            instructions.forEachIndexed { index, instruction ->
+                val instructionState = remember { mutableStateOf(instruction.instruction) }
+                InstructionStep(
+                    stepNumber = index + 1,
+                    instruction = instructionState.value,
+                    onValueChange = { newValue ->
+                        instructionState.value = newValue
+                    },
+                    onLeadingIconClick = { instructions.removeAt(index) },
+                )
+            }
+            NewInstructionButton(instructions)
         }
     }
 }
@@ -271,13 +288,15 @@ fun InstructionStep(
     stepNumber: Number?,
     instruction: String,
     onValueChange: (String) -> Unit,
+    onLeadingIconClick: () -> Unit,
 ) {
     // A Text with "steps" and a Textfield inside a column
     Column(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(top = 16.dp, bottom = 8.dp)
+                .padding(horizontal = 16.dp),
     ) {
         Text(
             text = "Step $stepNumber",
@@ -299,6 +318,24 @@ fun InstructionStep(
                     ),
             value = instruction,
             onValueChange = onValueChange,
+            trailingIcon = {
+                Icon(imageVector = Icons.Filled.Close, contentDescription = null, modifier = Modifier.clickable { onLeadingIconClick() })
+            },
         )
+    }
+}
+
+@Composable
+fun NewInstructionButton(instructions: MutableList<Instruction>) {
+    Button(
+        modifier =
+            Modifier
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.5.dp)),
+        onClick = { instructions.add(Instruction(instructions.size, "")) },
+    ) {
+        Text("Add New instruction")
     }
 }
