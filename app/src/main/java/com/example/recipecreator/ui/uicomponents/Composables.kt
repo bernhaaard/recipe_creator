@@ -16,8 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -25,7 +24,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -66,36 +64,30 @@ sealed class Screen(val route: String) {
 fun MainView(recipeViewModel: RecipeViewModel) {
     val state = recipeViewModel.recipeViewState.collectAsState()
     val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(navController, state.value.selectedScreen)
-        },
+    NavHost(
+        navController = navController,
+        modifier = Modifier.padding(),
+        startDestination = Screen.Home.route,
     ) {
-        NavHost(
-            navController = navController,
-            modifier = Modifier.padding(it),
-            startDestination = Screen.RecipeLibrary.route,
-        ) {
-            composable(Screen.Home.route) {
-                recipeViewModel.selectScreen(Screen.Home)
-                HomeScreen(recipeViewModel)
-            }
-            composable(Screen.RecipeLibrary.route) {
-                recipeViewModel.selectScreen(Screen.RecipeLibrary)
-                RecipeLibraryScreen(recipeViewModel, navController)
-            }
-            composable(Screen.AddRecipe.route) {
-                recipeViewModel.selectScreen(Screen.AddRecipe)
-                AddRecipeScreen(recipeViewModel)
-            }
-            composable(Screen.RecipeDetail.route) {
-                recipeViewModel.selectScreen(Screen.RecipeDetail)
-                RecipeDetailScreen(recipeViewModel, navController)
-            }
-            composable(Screen.EditRecipe.route) {
-                recipeViewModel.selectScreen(Screen.EditRecipe)
-                EditRecipeScreen(recipeViewModel, navController)
-            }
+        composable(Screen.Home.route) {
+            recipeViewModel.selectScreen(Screen.Home)
+            HomeScreen(recipeViewModel, navController)
+        }
+        composable(Screen.RecipeLibrary.route) {
+            recipeViewModel.selectScreen(Screen.RecipeLibrary)
+            RecipeLibraryScreen(recipeViewModel, navController)
+        }
+        composable(Screen.AddRecipe.route) {
+            recipeViewModel.selectScreen(Screen.AddRecipe)
+            AddRecipeScreen(recipeViewModel, navController)
+        }
+        composable(Screen.RecipeDetail.route) {
+            recipeViewModel.selectScreen(Screen.RecipeDetail)
+            RecipeDetailScreen(recipeViewModel, navController)
+        }
+        composable(Screen.EditRecipe.route) {
+            recipeViewModel.selectScreen(Screen.EditRecipe)
+            EditRecipeScreen(recipeViewModel, navController)
         }
     }
 }
@@ -105,9 +97,14 @@ fun BottomNavigationBar(
     navController: NavController,
     selectedScreen: Screen,
 ) {
-    NavigationBar(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
+    NavigationBar(modifier = Modifier.background(MaterialTheme.colorScheme.primary).height(96.dp)) {
         NavigationBarItem(
-            icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
+            icon = {
+                Icon(
+                    Icons.Filled.Home,
+                    contentDescription = "Home",
+                )
+            },
             label = { Text("Home") },
             selected = selectedScreen == Screen.Home,
             onClick = {
@@ -115,19 +112,16 @@ fun BottomNavigationBar(
             },
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = "Library") },
+            icon = {
+                Icon(
+                    Icons.Filled.Book,
+                    contentDescription = "Library",
+                )
+            },
             label = { Text("Library") },
             selected = selectedScreen == Screen.RecipeLibrary,
             onClick = {
                 navController.navigate(Screen.RecipeLibrary.route)
-            },
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.Add, contentDescription = "Add Recipe") },
-            label = { Text("Add Recipe") },
-            selected = selectedScreen == Screen.AddRecipe,
-            onClick = {
-                navController.navigate(Screen.AddRecipe.route)
             },
         )
     }

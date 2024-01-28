@@ -1,13 +1,10 @@
 package com.example.recipecreator.ui.screens
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,23 +30,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.recipecreator.R
+import androidx.navigation.NavController
 import com.example.recipecreator.model.Ingredient
 import com.example.recipecreator.model.Recipe
 import com.example.recipecreator.ui.uicomponents.AppTopBar
 import com.example.recipecreator.ui.viewmodels.RecipeViewModel
 
 @Composable
-fun AddRecipeScreen(recipeViewModel: RecipeViewModel) {
+fun AddRecipeScreen(
+    recipeViewModel: RecipeViewModel,
+    navController: NavController,
+) {
     Scaffold(
         topBar = {
-            AppTopBar(title = "Add Recipe", iconName = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back Button")
-        },
-        bottomBar = {
+            AppTopBar(
+                title = "Add Recipe",
+                iconName = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Back Button",
+                onBackClick = { navController.popBackStack() },
+            )
         },
     ) { padding ->
         val scrollState = rememberScrollState()
@@ -134,54 +135,22 @@ fun RecipeNameInput(title: MutableState<String>) {
                     ),
             value = title.value,
             onValueChange = { newTitle -> title.value = newTitle },
-            label = { Text(text = "title") },
+            label = { Text(text = "Recipe name") },
         )
     }
 }
 
 @Composable
 fun IngredientsList(ingredients: MutableList<Ingredient>) {
-    Row {
+    Column {
         Text(
             text = "Ingredients",
             modifier =
                 Modifier
-                    .padding(bottom = 8.dp),
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth(),
             Color(0xFF74CD66),
         )
-        Box(modifier = Modifier.padding(0.dp)) {
-            // Row for the "4Users" and "Time"
-            Row(
-                modifier =
-                    Modifier
-                        .padding(0.dp)
-                        .fillMaxWidth(),
-                Arrangement.End,
-            ) {
-                Text(text = "4")
-                Image(
-                    modifier =
-                        Modifier
-                            .width(20.dp)
-                            .height(20.dp),
-                    painter = painterResource(id = R.drawable.iconuser),
-                    contentDescription = "image description",
-                    contentScale = ContentScale.FillBounds,
-                )
-                Spacer(modifier = Modifier.width(20.dp))
-                Text(text = "Time")
-                Spacer(modifier = Modifier.width(8.dp))
-                Image(
-                    modifier =
-                        Modifier
-                            .width(20.dp)
-                            .height(20.dp),
-                    painter = painterResource(id = R.drawable.iconclock),
-                    contentDescription = "image description",
-                    contentScale = ContentScale.FillBounds,
-                )
-            }
-        }
     }
     ingredients.forEachIndexed { index, ingredient ->
         val quantityState = remember { mutableStateOf(ingredient.quantity) }
@@ -219,7 +188,7 @@ fun IngredientItem(
         TextField(
             modifier =
                 Modifier
-                    .width(64.dp)
+                    .width(72.dp)
                     .clip(RoundedCornerShape(12.5.dp))
                     .border(
                         width = 1.dp,
@@ -283,7 +252,6 @@ fun InstructionsList() {
                     .wrapContentHeight()
                     .fillMaxWidth()
                     .padding(bottom = 0.dp)
-                    .background(Color.White)
                     .border(
                         width = 1.dp,
                         color = Color(0xFF74CD66),
@@ -293,15 +261,17 @@ fun InstructionsList() {
             Alignment.CenterHorizontally,
         ) {
             // Add a Composable named InstructionSteps (located below this Composable)
-            InstructionStep()
-            InstructionStep()
         }
     }
 }
 
 // Composable for Steps + Textfield
 @Composable
-fun InstructionStep() {
+fun InstructionStep(
+    stepNumber: Number?,
+    instruction: String,
+    onValueChange: (String) -> Unit,
+) {
     // A Text with "steps" and a Textfield inside a column
     Column(
         modifier =
@@ -310,18 +280,16 @@ fun InstructionStep() {
                 .padding(16.dp),
     ) {
         Text(
-            text = "Step 1",
+            text = "Step $stepNumber",
             modifier =
                 Modifier
                     .padding(),
             Color(0xFF74CD66),
         )
-
-        var instruction = "Start writing here!"
         TextField(
             modifier =
                 Modifier
-                    .width(270.dp)
+                    .fillMaxWidth()
                     .padding()
                     .clip(RoundedCornerShape(12.5.dp))
                     .border(
@@ -330,7 +298,7 @@ fun InstructionStep() {
                         shape = RoundedCornerShape(size = 12.5.dp),
                     ),
             value = instruction,
-            onValueChange = { instruction = it },
+            onValueChange = onValueChange,
         )
     }
 }
