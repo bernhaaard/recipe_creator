@@ -3,6 +3,8 @@ package com.example.recipecreator.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Book
@@ -49,13 +51,18 @@ fun RecipeLibraryScreen(
             }
         },
     ) { innerPadding ->
+
+
+        val scrollState = rememberScrollState()
         Column(
             modifier =
-                Modifier
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .verticalScroll(state = scrollState),
             verticalArrangement = Arrangement.Center,
         ) {
+
             LaunchedEffect(key1 = Unit) {
                 recipeViewModel.fetchAllRecipes()
             }
