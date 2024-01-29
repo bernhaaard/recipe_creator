@@ -31,24 +31,21 @@ import com.example.recipecreator.R
 import com.example.recipecreator.model.Instruction
 import com.example.recipecreator.model.Recipe
 import com.example.recipecreator.ui.uicomponents.Screen
-import com.example.recipecreator.ui.viewmodels.RecipeViewModel
 
 @Composable
 fun RecipeDetailScreen(
-    recipeViewModel: RecipeViewModel,
     navController: NavController,
     recipe: Recipe,
 ) {
     // Recipe Detail Screen Composable
 
-    DetailScreen(recipeViewModel, navController, recipe)
+    DetailScreen(navController, recipe)
 }
 
 // This is just the template for the Ad recipe function, everything is hardcoded right now,
 
 @Composable
 fun DetailScreen(
-    viewModel: RecipeViewModel,
     navController: NavController,
     recipe: Recipe,
 ) {

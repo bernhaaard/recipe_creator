@@ -61,7 +61,7 @@ fun RecipeLibraryScreen(
             }
             val state = recipeViewModel.recipeViewState.collectAsState()
             state.value.recipes.forEachIndexed { index, recipe ->
-                RecipeCard(navController, recipe, onClick = {
+                RecipeCard(recipe, onClick = {
                     recipeViewModel.setCurrentRecipe(recipe)
                     navController.navigate(Screen.RecipeDetail.route)
                 })

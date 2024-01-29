@@ -85,7 +85,7 @@ fun MainView(recipeViewModel: RecipeViewModel) {
             val currentRecipe = recipeViewModel.recipeViewState.collectAsState().value.currentRecipe
             if (currentRecipe != null) {
                 recipeViewModel.selectScreen(Screen.RecipeDetail)
-                RecipeDetailScreen(recipeViewModel, navController, recipe = currentRecipe)
+                RecipeDetailScreen(navController, recipe = currentRecipe)
             } else {
                 navController.navigate(Screen.RecipeLibrary.route)
             }
@@ -166,7 +166,6 @@ fun AppTopBar(
 // Composable Recipe card for the library and the AI chat
 @Composable
 fun RecipeCard(
-    navController: NavController,
     recipe: Recipe,
     onClick: (Recipe) -> Unit,
 ) {

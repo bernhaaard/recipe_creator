@@ -275,7 +275,7 @@ fun InstructionsList(instructions: MutableList<Instruction>) {
                         instructionState.value = newValue
                         instructions[index] = instructions[index].copy(instruction = newValue)
                     },
-                    onLeadingIconClick = { instructions.removeAt(index) },
+                    onTrailingIconClick = { instructions.removeAt(index) },
                 )
             }
             NewInstructionButton(instructions)
@@ -289,7 +289,7 @@ fun InstructionStep(
     stepNumber: Number,
     instruction: String,
     onValueChange: (String) -> Unit,
-    onLeadingIconClick: () -> Unit,
+    onTrailingIconClick: () -> Unit,
 ) {
     // A Text with "steps" and a Textfield inside a column
     Column(
@@ -320,7 +320,7 @@ fun InstructionStep(
             value = instruction,
             onValueChange = onValueChange,
             trailingIcon = {
-                Icon(imageVector = Icons.Filled.Close, contentDescription = null, modifier = Modifier.clickable { onLeadingIconClick() })
+                Icon(imageVector = Icons.Filled.Close, contentDescription = null, modifier = Modifier.clickable { onTrailingIconClick() })
             },
         )
     }
