@@ -273,6 +273,7 @@ fun InstructionsList(instructions: MutableList<Instruction>) {
                     instruction = instructionState.value,
                     onValueChange = { newValue ->
                         instructionState.value = newValue
+                        instructions[index] = instructions[index].copy(instruction = newValue)
                     },
                     onLeadingIconClick = { instructions.removeAt(index) },
                 )
@@ -285,7 +286,7 @@ fun InstructionsList(instructions: MutableList<Instruction>) {
 // Composable for Steps + Textfield
 @Composable
 fun InstructionStep(
-    stepNumber: Number?,
+    stepNumber: Number,
     instruction: String,
     onValueChange: (String) -> Unit,
     onLeadingIconClick: () -> Unit,
