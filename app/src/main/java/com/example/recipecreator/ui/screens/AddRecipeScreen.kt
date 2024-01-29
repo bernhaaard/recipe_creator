@@ -335,7 +335,7 @@ fun NewInstructionButton(instructions: MutableList<Instruction>) {
                 .padding(bottom = 16.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.5.dp)),
-        onClick = { instructions.add(Instruction(instructions.size, "")) },
+        onClick = { instructions.add(Instruction(instructions.size + 1, "")) },
     ) {
         Text("Add New instruction")
     }
