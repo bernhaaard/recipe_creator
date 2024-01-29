@@ -10,8 +10,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.recipecreator.ui.uicomponents.AppTopBar
 import com.example.recipecreator.ui.uicomponents.BottomNavigationBar
@@ -33,9 +35,10 @@ fun RecipeLibraryScreen(
             )
         },
         bottomBar = {
+            val state = recipeViewModel.recipeViewState.collectAsState()
             BottomNavigationBar(
                 navController = navController,
-                selectedScreen = recipeViewModel.recipeViewState.collectAsState().value.selectedScreen,
+                selectedScreen = state.value.selectedScreen,
             )
         },
         floatingActionButton = {
@@ -47,9 +50,15 @@ fun RecipeLibraryScreen(
         },
     ) { innerPadding ->
         Column(
-            modifier = Modifier.padding(innerPadding),
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.Center,
         ) {
+            LaunchedEffect(key1 = Unit) {
+                recipeViewModel.fetchAllRecipes()
+            }
             val state = recipeViewModel.recipeViewState.collectAsState()
             state.value.recipes.forEachIndexed { index, recipe ->
                 RecipeCard(navController, recipe)

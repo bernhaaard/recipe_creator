@@ -28,9 +28,10 @@ fun HomeScreen(
             AppTopBar(title = "Home", iconName = Icons.Filled.Home, contentDescription = "Home")
         },
         bottomBar = {
+            val state = recipeViewModel.recipeViewState.collectAsState()
             BottomNavigationBar(
                 navController = navController,
-                selectedScreen = recipeViewModel.recipeViewState.collectAsState().value.selectedScreen,
+                selectedScreen = state.value.selectedScreen,
             )
         },
         floatingActionButton = {

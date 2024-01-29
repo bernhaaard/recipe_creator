@@ -27,7 +27,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -63,7 +62,6 @@ sealed class Screen(val route: String) {
 
 @Composable
 fun MainView(recipeViewModel: RecipeViewModel) {
-    val state = recipeViewModel.recipeViewState.collectAsState()
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -98,7 +96,12 @@ fun BottomNavigationBar(
     navController: NavController,
     selectedScreen: Screen,
 ) {
-    NavigationBar(modifier = Modifier.background(MaterialTheme.colorScheme.primary).height(96.dp)) {
+    NavigationBar(
+        modifier =
+            Modifier
+                .background(MaterialTheme.colorScheme.primary)
+                .height(96.dp),
+    ) {
         NavigationBarItem(
             icon = {
                 Icon(
@@ -161,7 +164,10 @@ fun RecipeCard(
     recipe: Recipe,
 ) {
     // Main box
-    Box(modifier = Modifier.clickable { navController.navigate(Screen.RecipeDetail.route) }) {
+    Box(
+        modifier =
+            Modifier.clickable { navController.navigate(Screen.RecipeDetail.route) },
+    ) {
         Row(
             modifier =
                 Modifier
@@ -175,7 +181,7 @@ fun RecipeCard(
                         color = Color(0xFF74CD66),
                         shape = RoundedCornerShape(size = 10.dp),
                     )
-                    .width(319.dp)
+                    .fillMaxWidth()
                     .height(110.dp)
                     .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 10.dp))
                     .padding(end = 13.dp),

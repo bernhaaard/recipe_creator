@@ -14,9 +14,10 @@ class Converters {
     }
 
     @TypeConverter
-    fun toIngredientsList(ingredients: String): List<Ingredient> {
+    fun toIngredientsList(ingredients: String?): List<Ingredient>? {
+        if (ingredients == null) return null
         val gson = Gson()
-        val type = object : TypeToken<List<String>>() {}.type
+        val type = object : TypeToken<List<Ingredient>>() {}.type
         return gson.fromJson(ingredients, type)
     }
 
@@ -27,9 +28,10 @@ class Converters {
     }
 
     @TypeConverter
-    fun toInstructionList(instructions: String): List<Instruction> {
+    fun toInstructionList(instructions: String?): List<Instruction>? {
+        if (instructions == null) return null
         val gson = Gson()
-        val type = object : TypeToken<List<String>>() {}.type
+        val type = object : TypeToken<List<Instruction>>() {}.type
         return gson.fromJson(instructions, type)
     }
 }
