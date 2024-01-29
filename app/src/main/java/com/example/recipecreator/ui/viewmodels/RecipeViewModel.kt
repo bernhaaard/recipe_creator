@@ -48,6 +48,13 @@ class RecipeViewModel(private val recipeRepository: RecipeRepository) : ViewMode
         }
     }
 
+    fun fetchRecipeById(recipeId: Long) {
+        viewModelScope.launch {
+            val recipe = recipeRepository.getRecipeById(recipeId)
+            _recipeViewState.value = _recipeViewState.value.copy(currentRecipe = recipe)
+        }
+    }
+
     // Delete a recipe
     fun deleteRecipe(recipe: Recipe) {
         viewModelScope.launch {
@@ -59,5 +66,9 @@ class RecipeViewModel(private val recipeRepository: RecipeRepository) : ViewMode
 
     fun selectScreen(screen: Screen) {
         _recipeViewState.update { it.copy(selectedScreen = screen) }
+    }
+
+    fun setCurrentRecipe(recipe: Recipe) {
+        _recipeViewState.update { it.copy(currentRecipe = recipe) }
     }
 }

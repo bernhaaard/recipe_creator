@@ -28,6 +28,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.recipecreator.R
+import com.example.recipecreator.model.Instruction
+import com.example.recipecreator.model.Recipe
 import com.example.recipecreator.ui.uicomponents.Screen
 import com.example.recipecreator.ui.viewmodels.RecipeViewModel
 
@@ -35,11 +37,11 @@ import com.example.recipecreator.ui.viewmodels.RecipeViewModel
 fun RecipeDetailScreen(
     recipeViewModel: RecipeViewModel,
     navController: NavController,
+    recipe: Recipe,
 ) {
     // Recipe Detail Screen Composable
-    Text(text = "Recipe Detail Screen")
 
-    DetailScreen(recipeViewModel, navController)
+    DetailScreen(recipeViewModel, navController, recipe)
 }
 
 // This is just the template for the Ad recipe function, everything is hardcoded right now,
@@ -48,6 +50,7 @@ fun RecipeDetailScreen(
 fun DetailScreen(
     viewModel: RecipeViewModel,
     navController: NavController,
+    recipe: Recipe,
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -67,7 +70,7 @@ fun DetailScreen(
             Alignment.CenterHorizontally,
         ) {
 //
-            DisplayPictureAndRecipeName()
+            DisplayPictureAndRecipeName(recipe.title)
 
 // Ingredients Header and textfields
             Column(
@@ -121,10 +124,9 @@ fun DetailScreen(
                 }
 
 // Composables to add ingredients - located underneath this composable
-                DisplayIngredients()
-                DisplayIngredients()
-                DisplayIngredients()
-
+                recipe.ingredients.forEachIndexed { index, ingredient ->
+                    DisplayIngredient(ingredient.quantity, ingredient.name)
+                }
                 // Instruction header and Textfields
 
                 Text(
@@ -152,8 +154,9 @@ fun DetailScreen(
                     Alignment.CenterHorizontally,
                 ) {
 // Add a Composable named InstructionSteps (located below this Composable)
-                    DisplayInstructions()
-                    DisplayInstructions()
+                    recipe.instructions.forEachIndexed { index, instruction ->
+                        DisplayInstruction(instruction)
+                    }
                 }
 
                 Spacer(modifier = Modifier.padding(20.dp))
@@ -183,7 +186,7 @@ fun DetailScreen(
 }
 
 @Composable
-fun DisplayPictureAndRecipeName() {
+fun DisplayPictureAndRecipeName(recipeName: String) {
     // The big picture at top
     Box(
         modifier =
@@ -230,7 +233,7 @@ fun DisplayPictureAndRecipeName() {
         ) {
             Text(
                 modifier = Modifier.padding(15.dp),
-                text = "RecipeNameHere",
+                text = recipeName,
             )
         }
     }
@@ -238,7 +241,10 @@ fun DisplayPictureAndRecipeName() {
 
 // Composable to show Ingredients
 @Composable
-fun DisplayIngredients() {
+fun DisplayIngredient(
+    quantity: String,
+    ingredient: String,
+) {
     Row(
         modifier = Modifier.width(320.dp),
     ) {
@@ -257,7 +263,7 @@ fun DisplayIngredients() {
         ) {
             Text(
                 modifier = Modifier.padding(15.dp),
-                text = "100g",
+                text = quantity,
             )
         }
 
@@ -276,7 +282,7 @@ fun DisplayIngredients() {
         ) {
             Text(
                 modifier = Modifier.padding(15.dp),
-                text = "Ingredients displayed here",
+                text = ingredient,
             )
         }
     }
@@ -284,7 +290,7 @@ fun DisplayIngredients() {
 
 // Composable for Steps + Textfield
 @Composable
-fun DisplayInstructions() {
+fun DisplayInstruction(instruction: Instruction) {
     // A Text with "steps" and a Textfield inside a column
     Column(
         modifier =
@@ -293,7 +299,7 @@ fun DisplayInstructions() {
     ) {
         // add function to Display steps continuously
         Text(
-            text = "Step 1",
+            text = "Step ${instruction.stepNumber}",
             modifier =
                 Modifier
                     .padding(bottom = 8.dp, top = 20.dp),
@@ -315,8 +321,8 @@ fun DisplayInstructions() {
         ) {
             Text(
                 modifier = Modifier.padding(15.dp),
-                text = "Instructions should be displayed here",
+                text = instruction.instruction,
             )
         }
-    } 
+    }
 }

@@ -27,6 +27,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -81,8 +82,13 @@ fun MainView(recipeViewModel: RecipeViewModel) {
             AddRecipeScreen(recipeViewModel, navController)
         }
         composable(Screen.RecipeDetail.route) {
-            recipeViewModel.selectScreen(Screen.RecipeDetail)
-            RecipeDetailScreen(recipeViewModel, navController)
+            val currentRecipe = recipeViewModel.recipeViewState.collectAsState().value.currentRecipe
+            if (currentRecipe != null) {
+                recipeViewModel.selectScreen(Screen.RecipeDetail)
+                RecipeDetailScreen(recipeViewModel, navController, recipe = currentRecipe)
+            } else {
+                navController.navigate(Screen.RecipeLibrary.route)
+            }
         }
         composable(Screen.EditRecipe.route) {
             recipeViewModel.selectScreen(Screen.EditRecipe)
@@ -162,11 +168,12 @@ fun AppTopBar(
 fun RecipeCard(
     navController: NavController,
     recipe: Recipe,
+    onClick: (Recipe) -> Unit,
 ) {
     // Main box
     Box(
         modifier =
-            Modifier.clickable { navController.navigate(Screen.RecipeDetail.route) },
+            Modifier.clickable { onClick(recipe) },
     ) {
         Row(
             modifier =
