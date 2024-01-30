@@ -72,7 +72,7 @@ fun AddRecipeScreen(
             val title = remember { mutableStateOf("") }
             val ingredients = remember { mutableStateListOf(Ingredient("", "")) }
             val instructions = remember { mutableStateListOf(Instruction(1, "")) }
-            AddRecipeImage()
+
             RecipeNameInput(title)
             IngredientsList(ingredients)
             InstructionsList(instructions)

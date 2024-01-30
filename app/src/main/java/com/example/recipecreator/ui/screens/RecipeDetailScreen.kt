@@ -171,16 +171,6 @@ fun DetailScreen(
                     Text(text = "Edit Recipe")
                 }
 
-                // Button to save the Recipe
-                Button(
-                    onClick = { /*TODO*/ },
-                    modifier =
-                        Modifier
-                            .width(320.dp),
-                ) {
-                    Text(text = "Save Recipe")
-                }
-
                 DeleteButton(recipeViewModel, navController, recipe)
             }
         }

@@ -91,8 +91,13 @@ fun MainView(recipeViewModel: RecipeViewModel) {
             }
         }
         composable(Screen.EditRecipe.route) {
-            recipeViewModel.selectScreen(Screen.EditRecipe)
-            EditRecipeScreen(recipeViewModel, navController)
+            val currentRecipe = recipeViewModel.recipeViewState.collectAsState().value.currentRecipe
+            if (currentRecipe != null) {
+                recipeViewModel.selectScreen(Screen.EditRecipe)
+                EditRecipeScreen(recipeViewModel, navController, recipe = currentRecipe)
+            } else {
+                navController.navigate(Screen.RecipeLibrary.route)
+            }
         }
     }
 }
