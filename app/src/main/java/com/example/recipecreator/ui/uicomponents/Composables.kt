@@ -85,7 +85,7 @@ fun MainView(recipeViewModel: RecipeViewModel) {
             val currentRecipe = recipeViewModel.recipeViewState.collectAsState().value.currentRecipe
             if (currentRecipe != null) {
                 recipeViewModel.selectScreen(Screen.RecipeDetail)
-                RecipeDetailScreen(navController, recipe = currentRecipe)
+                RecipeDetailScreen(recipeViewModel, navController, recipe = currentRecipe)
             } else {
                 navController.navigate(Screen.RecipeLibrary.route)
             }
