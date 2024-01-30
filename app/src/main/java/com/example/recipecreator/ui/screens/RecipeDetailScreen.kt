@@ -31,21 +31,24 @@ import com.example.recipecreator.R
 import com.example.recipecreator.model.Instruction
 import com.example.recipecreator.model.Recipe
 import com.example.recipecreator.ui.uicomponents.Screen
+import com.example.recipecreator.ui.viewmodels.RecipeViewModel
 
 @Composable
 fun RecipeDetailScreen(
+    recipeViewModel: RecipeViewModel,
     navController: NavController,
     recipe: Recipe,
 ) {
     // Recipe Detail Screen Composable
 
-    DetailScreen(navController, recipe)
+    DetailScreen(recipeViewModel, navController, recipe)
 }
 
 // This is just the template for the Ad recipe function, everything is hardcoded right now,
 
 @Composable
 fun DetailScreen(
+    recipeViewModel: RecipeViewModel,
     navController: NavController,
     recipe: Recipe,
 ) {
@@ -177,6 +180,8 @@ fun DetailScreen(
                 ) {
                     Text(text = "Save Recipe")
                 }
+
+                DeleteButton(recipeViewModel, navController, recipe)
             }
         }
     }
@@ -321,5 +326,19 @@ fun DisplayInstruction(instruction: Instruction) {
                 text = instruction.instruction,
             )
         }
+    }
+}
+
+@Composable
+fun DeleteButton(
+    recipeViewModel: RecipeViewModel,
+    navController: NavController,
+    recipe: Recipe,
+) {
+    Button(onClick = {
+        recipeViewModel.deleteRecipe(recipe)
+        navController.popBackStack()
+    }) {
+        Text(text = "Delete Recipe")
     }
 }
