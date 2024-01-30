@@ -48,8 +48,6 @@ fun RecipeDetailScreen(
 
 @Composable
 fun DetailScreen(
-
-
     recipeViewModel: RecipeViewModel,
     navController: NavController,
     recipe: Recipe,
@@ -183,15 +181,11 @@ fun DetailScreen(
                     Text(text = "Save Recipe")
                 }
 
-                DeleteButton(recipeViewModel, navController, recipe)            }
+                DeleteButton(recipeViewModel, navController, recipe)
+            }
         }
     }
 }
-
-
-
-
-
 
 @Composable
 fun DisplayPictureAndRecipeName(recipeName: String) {
@@ -335,10 +329,12 @@ fun DisplayInstruction(instruction: Instruction) {
     }
 }
 
-
-
 @Composable
-fun DeleteButton(recipeViewModel: RecipeViewModel, navController: NavController, recipe: Recipe) {
+fun DeleteButton(
+    recipeViewModel: RecipeViewModel,
+    navController: NavController,
+    recipe: Recipe,
+) {
     Button(onClick = {
         recipeViewModel.deleteRecipe(recipe)
         navController.popBackStack()
