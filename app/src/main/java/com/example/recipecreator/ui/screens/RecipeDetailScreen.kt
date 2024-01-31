@@ -207,23 +207,6 @@ fun DetailScreen(
 
 @Composable
 fun DisplayPictureAndRecipeName(recipeName: String) {
-    // The big picture at top
- /*   Box(
-        modifier =
-        Modifier
-            .padding(0.dp)
-            .width(320.dp)
-            .height(180.dp)
-            .border(
-                width = 1.dp,
-                color = Color.LightGray,
-                shape = RoundedCornerShape(size = 12.5.dp),
-            ),
-        Alignment.Center,
-        // Function for getting the picture is missing
-    ) { }
-*/
-
 // "Recipe" header with the recipeName Textfield
     Column(
         modifier =
@@ -370,8 +353,10 @@ fun DeleteButton(
                 .fillMaxWidth(),
         colors =
             ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFD00A0A), // Example purple color
-                contentColor = Color.White, // Text/icon color inside the button
+                // Example purple color
+                containerColor = Color(0xFFD00A0A),
+                // Text/icon color inside the button
+                contentColor = Color.White,
             ),
         onClick = {
             recipeViewModel.deleteRecipe(recipe)
