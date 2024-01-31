@@ -35,7 +35,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -110,9 +109,9 @@ fun BottomNavigationBar(
 ) {
     NavigationBar(
         modifier =
-        Modifier
-            .background(MaterialTheme.colorScheme.primary)
-            .height(96.dp),
+            Modifier
+                .background(MaterialTheme.colorScheme.primary)
+                .height(96.dp),
     ) {
         NavigationBarItem(
             icon = {
@@ -161,11 +160,11 @@ fun AppTopBar(
             }
         },
         modifier =
-        Modifier
-            .padding(bottom = 8.dp)
-            .shadow(
-                elevation = 8.dp,
-            ),
+            Modifier
+                .padding(bottom = 8.dp)
+                .shadow(
+                    elevation = 8.dp,
+                ),
     )
 }
 
@@ -178,25 +177,25 @@ fun RecipeCard(
     // Main box
     Box(
         modifier =
-        Modifier.clickable { onClick(recipe) },
+            Modifier.clickable { onClick(recipe) },
     ) {
         Row(
             modifier =
-            Modifier
-                .shadow(
-                    elevation = 4.dp,
-                    spotColor = Color(0x40000000),
-                    ambientColor = Color(0x40000000),
-                )
-                .border(
-                    width = 2.dp,
-                    color = Color(0xFF74CD66),
-                    shape = RoundedCornerShape(size = 10.dp),
-                )
-                .fillMaxWidth()
-                .height(110.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 10.dp))
-                .padding(end = 13.dp),
+                Modifier
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000),
+                    )
+                    .border(
+                        width = 2.dp,
+                        color = Color(0xFF74CD66),
+                        shape = RoundedCornerShape(size = 10.dp),
+                    )
+                    .fillMaxWidth()
+                    .height(110.dp)
+                    .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 10.dp))
+                    .padding(end = 13.dp),
             horizontalArrangement = Arrangement.spacedBy(17.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -207,9 +206,9 @@ fun RecipeCard(
                 // Big Picture
                 Image(
                     modifier =
-                    Modifier
-                        .width(100.dp)
-                        .height(100.dp),
+                        Modifier
+                            .width(100.dp)
+                            .height(100.dp),
                     painter = painterResource(id = R.drawable.chicken_and_potatoes),
                     contentDescription = "image description",
                     contentScale = ContentScale.FillBounds,
@@ -221,24 +220,24 @@ fun RecipeCard(
 
                     Column(
                         modifier =
-                        Modifier
-                            .padding(0.dp)
-                            .fillMaxHeight(),
+                            Modifier
+                                .padding(0.dp)
+                                .fillMaxHeight(),
                         verticalArrangement = Arrangement.SpaceBetween,
                     ) {
                         // Top row
                         Box(
                             modifier =
-                            Modifier
-                                .padding(0.dp)
-                                .fillMaxWidth(),
+                                Modifier
+                                    .padding(0.dp)
+                                    .fillMaxWidth(),
                             Alignment.TopEnd,
                         ) {
                             Image(
                                 modifier =
-                                Modifier
-                                    .width(20.dp)
-                                    .height(20.dp),
+                                    Modifier
+                                        .width(28.dp)
+                                        .height(24.dp),
                                 painter = painterResource(id = R.drawable.iconstar),
                                 contentDescription = "image description",
                                 contentScale = ContentScale.FillBounds,
@@ -253,17 +252,17 @@ fun RecipeCard(
                         // Bottom row
                         Row(
                             modifier =
-                            Modifier
-                                .padding(0.dp)
-                                .fillMaxWidth(),
+                                Modifier
+                                    .padding(0.dp)
+                                    .fillMaxWidth(),
                             Arrangement.End,
                         ) {
                             Text(text = "4")
                             Image(
                                 modifier =
-                                Modifier
-                                    .width(20.dp)
-                                    .height(20.dp),
+                                    Modifier
+                                        .width(20.dp)
+                                        .height(20.dp),
                                 painter = painterResource(id = R.drawable.iconuser),
                                 contentDescription = "image description",
                                 contentScale = ContentScale.FillBounds,
@@ -274,9 +273,9 @@ fun RecipeCard(
 
                             Image(
                                 modifier =
-                                Modifier
-                                    .width(20.dp)
-                                    .height(20.dp),
+                                    Modifier
+                                        .width(20.dp)
+                                        .height(20.dp),
                                 painter = painterResource(id = R.drawable.iconclock),
                                 contentDescription = "image description",
                                 contentScale = ContentScale.FillBounds,
@@ -287,10 +286,4 @@ fun RecipeCard(
             }
         }
     }
-}
-
-
-@Composable
-fun BoldText() {
-    Text("Hello World", fontWeight = FontWeight.Bold)
 }
