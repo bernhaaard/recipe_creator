@@ -1,6 +1,7 @@
 package com.example.recipecreator.ui.screens
 
 import GreyBackground
+import GreyHeaders
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -59,9 +60,10 @@ fun DetailScreen(
     recipe: Recipe,
 ) {
     Box(modifier = Modifier
-        .background(GreyBackground)
+        .background(GreyHeaders)
         .fillMaxWidth()
-        .fillMaxHeight())
+        .fillMaxHeight()
+        .clip(RoundedCornerShape(12.5.dp)))
     {
 
         val scrollState = rememberScrollState()
@@ -71,10 +73,13 @@ fun DetailScreen(
                 .verticalScroll(state = scrollState)
                 .fillMaxWidth()
                 .wrapContentHeight()
+                .clip(RoundedCornerShape(12.5.dp))
                 .padding(start = 22.dp, end = 22.dp),
         ) {
             Column(
-                modifier = Modifier.padding(0.dp),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(12.5.dp))
+                    .padding(0.dp),
                 Arrangement.Center,
                 Alignment.CenterHorizontally,
             ) {
@@ -85,14 +90,17 @@ fun DetailScreen(
                 Column(
                     modifier =
                     Modifier
+                        .clip(RoundedCornerShape(12.5.dp))
                         .padding(0.dp),
                 ) {
                     // Ingredients Text and icons start here
-                    Row {
+                    Row(modifier = Modifier
+                        .clip(RoundedCornerShape(12.5.dp))) {
                         Text(
                             text = "Ingredients",
                             modifier =
                             Modifier
+                                .clip(RoundedCornerShape(12.5.dp))
                                 .padding(bottom = 8.dp),
                             Color(0xFF74CD66),
                         )
@@ -102,7 +110,8 @@ fun DetailScreen(
                                 modifier =
                                 Modifier
                                     .padding(0.dp)
-                                    .fillMaxWidth(),
+                                    .fillMaxWidth()
+                                    .clip(RoundedCornerShape(12.5.dp)),
                                 Arrangement.End,
                             ) {
                                 Text(text = "4")
@@ -211,6 +220,7 @@ fun DisplayPictureAndRecipeName(recipeName: String) {
     Column(
         modifier =
         Modifier
+            .clip(RoundedCornerShape(12.5.dp))
             .padding(top = 20.dp, bottom = 25.dp)
             .fillMaxWidth(),
     ) {
@@ -218,6 +228,7 @@ fun DisplayPictureAndRecipeName(recipeName: String) {
             text = "Recipe name",
             modifier =
             Modifier
+                .clip(RoundedCornerShape(12.5.dp))
                 .padding(bottom = 10.dp),
             Color(0xFF74CD66),
 
@@ -239,7 +250,9 @@ fun DisplayPictureAndRecipeName(recipeName: String) {
                 ),
         ) {
             Text(
-                modifier = Modifier.padding(15.dp),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(12.5.dp))
+                    .padding(15.dp),
                 text = recipeName,
             )
         }
@@ -255,6 +268,7 @@ fun DisplayIngredient(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clip(RoundedCornerShape(12.5.dp))
     ) {
         // InstructionAmountTextField
         Box(
@@ -271,7 +285,9 @@ fun DisplayIngredient(
                 ),
         ) {
             Text(
-                modifier = Modifier.padding(15.dp),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(12.5.dp))
+                    .padding(15.dp),
                 text = quantity,
             )
         }
@@ -291,7 +307,9 @@ fun DisplayIngredient(
                 ),
         ) {
             Text(
-                modifier = Modifier.padding(15.dp),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(12.5.dp))
+                    .padding(15.dp),
                 text = ingredient,
             )
         }
@@ -314,6 +332,7 @@ fun DisplayInstruction(instruction: Instruction) {
             text = "Step ${instruction.stepNumber}",
             modifier =
             Modifier
+                .clip(RoundedCornerShape(12.5.dp))
                 .fillMaxWidth()
                 .padding(start = 15.dp, bottom = 8.dp, top = 8.dp),
             Color(0xFF74CD66),
@@ -335,6 +354,7 @@ fun DisplayInstruction(instruction: Instruction) {
             Text(
 
                 modifier = Modifier
+                    .clip(RoundedCornerShape(12.5.dp))
                     .padding(15.dp),
                 text = instruction.instruction,
             )
