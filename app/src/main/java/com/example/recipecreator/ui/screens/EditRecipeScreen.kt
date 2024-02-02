@@ -14,7 +14,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,15 +45,14 @@ fun EditRecipeScreen(
         },
     ) { padding ->
         val scrollState = rememberScrollState()
-        val state = recipeViewModel.recipeViewState.collectAsState()
         Column(
             modifier =
-            Modifier
-                .verticalScroll(state = scrollState)
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(padding)
-                .padding(22.dp),
+                Modifier
+                    .verticalScroll(state = scrollState)
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(padding)
+                    .padding(22.dp),
             Arrangement.Center,
             Alignment.CenterHorizontally,
         ) {
@@ -77,11 +75,11 @@ fun EditRecipeScreen(
                     recipeViewModel.updateRecipe(
                         Recipe(id = id, title = title.value, ingredients = ingredients, instructions = instructions, favorite = false),
                     )
-                    navController.navigate(Screen.Home.route)
+                    navController.navigate(Screen.RecipeLibrary.route)
                 },
                 modifier =
-                Modifier
-                    .width(320.dp),
+                    Modifier
+                        .width(320.dp),
             ) {
                 Text(text = "Update Recipe")
             }

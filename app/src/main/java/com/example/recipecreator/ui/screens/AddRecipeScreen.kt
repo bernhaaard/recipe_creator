@@ -41,7 +41,6 @@ import com.example.recipecreator.model.Recipe
 import com.example.recipecreator.ui.uicomponents.AppTopBar
 import com.example.recipecreator.ui.uicomponents.Screen
 import com.example.recipecreator.ui.viewmodels.RecipeViewModel
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun AddRecipeScreen(
@@ -61,12 +60,12 @@ fun AddRecipeScreen(
         val scrollState = rememberScrollState()
         Column(
             modifier =
-            Modifier
-                .verticalScroll(state = scrollState)
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(padding)
-                .padding(32.dp),
+                Modifier
+                    .verticalScroll(state = scrollState)
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(padding)
+                    .padding(32.dp),
             Arrangement.Center,
             Alignment.CenterHorizontally,
         ) {
@@ -85,8 +84,8 @@ fun AddRecipeScreen(
                     navController.navigate(Screen.Home.route)
                 },
                 modifier =
-                Modifier
-                    .width(320.dp),
+                    Modifier
+                        .width(320.dp),
             ) {
                 Text(text = "Save Recipe")
             }
@@ -98,15 +97,15 @@ fun AddRecipeScreen(
 fun AddRecipeImage() {
     Box(
         modifier =
-        Modifier
-            .padding(bottom = 16.dp)
-            .fillMaxWidth()
-            .height(180.dp)
-            .border(
-                width = 1.dp,
-                color = Color.LightGray,
-                shape = RoundedCornerShape(size = 12.5.dp),
-            ),
+            Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
+                .height(180.dp)
+                .border(
+                    width = 1.dp,
+                    color = Color.LightGray,
+                    shape = RoundedCornerShape(size = 12.5.dp),
+                ),
         Alignment.Center,
     ) {
         Text(text = "Add Picture")
@@ -117,28 +116,28 @@ fun AddRecipeImage() {
 fun RecipeNameInput(title: MutableState<String>) {
     Column(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
     ) {
         Text(
             text = "Recipe name",
             modifier =
-            Modifier
-                .padding(0.dp),
+                Modifier
+                    .padding(0.dp),
             Color(0xFF74CD66),
         )
 
         TextField(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(12.5.dp))
-                .border(
-                    width = 1.dp,
-                    color = Color.LightGray,
-                    shape = RoundedCornerShape(size = 12.5.dp),
-                ),
+                Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.5.dp))
+                    .border(
+                        width = 1.dp,
+                        color = Color.LightGray,
+                        shape = RoundedCornerShape(size = 12.5.dp),
+                    ),
             value = title.value,
             onValueChange = { newTitle -> title.value = newTitle },
             label = { Text(text = "Recipe name") },
@@ -152,9 +151,9 @@ fun IngredientsList(ingredients: MutableList<Ingredient>) {
         Text(
             text = "Ingredients",
             modifier =
-            Modifier
-                .padding(bottom = 8.dp)
-                .fillMaxWidth(),
+                Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth(),
             Color(0xFF74CD66),
         )
     }
@@ -163,14 +162,12 @@ fun IngredientsList(ingredients: MutableList<Ingredient>) {
         val nameState = remember { mutableStateOf(ingredient.name) }
 
         IngredientItem(
-
             quantity = quantityState.value,
             name = nameState.value,
             onQuantityChange = { newQuantity ->
                 quantityState.value = newQuantity
                 ingredients[index] = ingredients[index].copy(quantity = newQuantity)
             },
-
             onNameChange = { newName ->
                 nameState.value = newName
                 ingredients[index] = ingredients[index].copy(name = newName)
@@ -189,21 +186,21 @@ fun IngredientItem(
 ) {
     Row(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
     ) {
         TextField(
             modifier =
-            Modifier
-                .width(72.dp)
-                .clip(RoundedCornerShape(12.5.dp))
-                .align(Alignment.CenterVertically)
-                .border(
-                    width = 1.dp,
-                    color = Color.LightGray,
-                    shape = RoundedCornerShape(size = 12.5.dp),
-                ),
+                Modifier
+                    .width(72.dp)
+                    .clip(RoundedCornerShape(12.5.dp))
+                    .align(Alignment.CenterVertically)
+                    .border(
+                        width = 1.dp,
+                        color = Color.LightGray,
+                        shape = RoundedCornerShape(size = 12.5.dp),
+                    ),
             value = quantity,
             textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
             onValueChange = onQuantityChange,
@@ -212,19 +209,18 @@ fun IngredientItem(
 
         TextField(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp)
-                .clip(RoundedCornerShape(12.5.dp))
-                .border(
-                    width = 1.dp,
-                    color = Color.LightGray,
-                    shape = RoundedCornerShape(size = 12.5.dp),
-                ),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp)
+                    .clip(RoundedCornerShape(12.5.dp))
+                    .border(
+                        width = 1.dp,
+                        color = Color.LightGray,
+                        shape = RoundedCornerShape(size = 12.5.dp),
+                    ),
             value = name,
             onValueChange = onNameChange,
             label = { Text(text = "Ingredient...") },
-
         )
     }
 }
@@ -233,10 +229,10 @@ fun IngredientItem(
 fun NewIngredientButton(ingredients: MutableList<Ingredient>) {
     Button(
         modifier =
-        Modifier
-            .padding(bottom = 16.dp)
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(12.5.dp)),
+            Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.5.dp)),
         onClick = { ingredients.add(Ingredient("", "")) },
     ) {
         Text("Add New Ingredient")
@@ -247,28 +243,28 @@ fun NewIngredientButton(ingredients: MutableList<Ingredient>) {
 fun InstructionsList(instructions: MutableList<Instruction>) {
     Column(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
     ) {
         Text(
             text = "Instructions",
             modifier =
-            Modifier
-                .padding(bottom = 8.dp),
+                Modifier
+                    .padding(bottom = 8.dp),
             Color(0xFF74CD66),
         )
         Column(
             modifier =
-            Modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
-                .padding(bottom = 0.dp)
-                .border(
-                    width = 1.dp,
-                    color = Color(0xFF74CD66),
-                    shape = RoundedCornerShape(size = 12.5.dp),
-                ),
+                Modifier
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .padding(bottom = 0.dp)
+                    .border(
+                        width = 1.dp,
+                        color = Color(0xFF74CD66),
+                        shape = RoundedCornerShape(size = 12.5.dp),
+                    ),
             Arrangement.Center,
             Alignment.CenterHorizontally,
         ) {
@@ -301,35 +297,35 @@ fun InstructionStep(
     // A Text with "steps" and a Textfield inside a column
     Column(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp, bottom = 8.dp)
-            .padding(horizontal = 16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, bottom = 8.dp)
+                .padding(horizontal = 16.dp),
     ) {
         Text(
             text = "Step $stepNumber",
             modifier =
-            Modifier
-                .padding(),
+                Modifier
+                    .padding(),
             Color(0xFF74CD66),
         )
         TextField(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding()
-                .clip(RoundedCornerShape(12.5.dp))
-                .border(
-                    width = 1.dp,
-                    color = Color.LightGray,
-                    shape = RoundedCornerShape(size = 12.5.dp),
-                ),
+                Modifier
+                    .fillMaxWidth()
+                    .padding()
+                    .clip(RoundedCornerShape(12.5.dp))
+                    .border(
+                        width = 1.dp,
+                        color = Color.LightGray,
+                        shape = RoundedCornerShape(size = 12.5.dp),
+                    ),
             value = instruction,
             onValueChange = onValueChange,
             trailingIcon = {
                 Icon(imageVector = Icons.Filled.Close, contentDescription = null, modifier = Modifier.clickable { onTrailingIconClick() })
             },
-            label = { Text(text = "Instruction...") }
+            label = { Text(text = "Instruction...") },
         )
     }
 }
@@ -338,11 +334,11 @@ fun InstructionStep(
 fun NewInstructionButton(instructions: MutableList<Instruction>) {
     Button(
         modifier =
-        Modifier
-            .padding(horizontal = 16.dp)
-            .padding(bottom = 16.dp)
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(12.5.dp)),
+            Modifier
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.5.dp)),
         onClick = { instructions.add(Instruction(instructions.size + 1, "")) },
     ) {
         Text("Add New instruction")
