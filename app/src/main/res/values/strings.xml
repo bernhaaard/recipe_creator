@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">recipe_creator</string>
+    <string name="app_name">Recipe Wizard</string>
+    <string name="Chat_info_message">This page is supposed to have the LLM Chatbot but due to the short timeframe of the project we couldn\'t implement it.</string>
 </resources>
