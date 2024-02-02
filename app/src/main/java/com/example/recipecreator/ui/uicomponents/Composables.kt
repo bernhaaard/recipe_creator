@@ -238,8 +238,8 @@ fun RecipeCard(
                             Image(
                                 modifier =
                                     Modifier
-                                        .width(20.dp)
-                                        .height(20.dp),
+                                        .width(28.dp)
+                                        .height(24.dp),
                                 painter = painterResource(id = R.drawable.iconstar),
                                 contentDescription = "image description",
                                 contentScale = ContentScale.FillBounds,

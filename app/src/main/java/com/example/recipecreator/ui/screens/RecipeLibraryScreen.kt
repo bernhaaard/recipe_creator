@@ -52,17 +52,15 @@ fun RecipeLibraryScreen(
         },
     ) { innerPadding ->
 
-
         val scrollState = rememberScrollState()
         Column(
             modifier =
-            Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .verticalScroll(state = scrollState),
+                Modifier
+                    .padding(innerPadding)
+                    .padding(horizontal = 21.dp, vertical = 13.dp)
+                    .verticalScroll(state = scrollState),
             verticalArrangement = Arrangement.Center,
         ) {
-
             LaunchedEffect(key1 = Unit) {
                 recipeViewModel.fetchAllRecipes()
             }

@@ -195,6 +195,7 @@ fun IngredientItem(
                 Modifier
                     .width(72.dp)
                     .clip(RoundedCornerShape(12.5.dp))
+                    .align(Alignment.CenterVertically)
                     .border(
                         width = 1.dp,
                         color = Color.LightGray,
@@ -203,6 +204,7 @@ fun IngredientItem(
             value = quantity,
             textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
             onValueChange = onQuantityChange,
+            label = { Text(text = "") },
         )
 
         TextField(
@@ -218,6 +220,7 @@ fun IngredientItem(
                     ),
             value = name,
             onValueChange = onNameChange,
+            label = { Text(text = "Ingredient...") },
         )
     }
 }
@@ -322,6 +325,7 @@ fun InstructionStep(
             trailingIcon = {
                 Icon(imageVector = Icons.Filled.Close, contentDescription = null, modifier = Modifier.clickable { onTrailingIconClick() })
             },
+            label = { Text(text = "Instruction...") },
         )
     }
 }
