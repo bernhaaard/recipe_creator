@@ -77,7 +77,7 @@ fun EditRecipeScreen(
                     recipeViewModel.updateRecipe(
                         Recipe(id = id, title = title.value, ingredients = ingredients, instructions = instructions, favorite = false),
                     )
-                    navController.navigate(Screen.Home.route)
+                    navController.navigate(Screen.RecipeLibrary.route)
                 },
                 modifier =
                     Modifier
