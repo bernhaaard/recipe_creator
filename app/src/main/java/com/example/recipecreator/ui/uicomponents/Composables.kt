@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Chat
 import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -116,11 +118,11 @@ fun BottomNavigationBar(
         NavigationBarItem(
             icon = {
                 Icon(
-                    Icons.Filled.Home,
-                    contentDescription = "Home",
+                    Icons.AutoMirrored.Filled.Chat,
+                    contentDescription = "Chat",
                 )
             },
-            label = { Text("Home") },
+            label = { Text("Chat") },
             selected = selectedScreen == Screen.Home,
             onClick = {
                 navController.navigate(Screen.Home.route)
